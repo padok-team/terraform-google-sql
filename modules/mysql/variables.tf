@@ -8,87 +8,56 @@ variable "project_id" {
   type        = string
 }
 
-variable "zone" {
-  description = "The zone for the master instance, it should be something like: us-central1-a, us-east1-c, etc."
-  type        = string
-}
-
-variable "region" {
-  description = "The region for the master instance, it should be something like: us-central1-a, us-east1-c, etc."
+variable "location" {
+  description = "Region or Zone for the master instance, this will define if database is zonal or regional"
   type        = string
 }
 
 variable "engine_version" {
-  description = "The version of MySQL engine."
+  description = "The version of MySQL engine. Check https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version for possible versions."
   type        = string
-  default     = "MYSQL_5_6"
+  default     = "MYSQL_8_0"
 }
 
-variable "nb_cpu" {
-  description = "Number of virtual processors."
-  type        = number
-
-  validation {
-    condition     = var.nb_cpu == 1 || (var.nb_cpu >= 2 && var.nb_cpu <= 96 && var.nb_cpu % 2 == 0) # https://cloud.google.com/sql/docs/postgres/create-instance#machine-types
-    error_message = "Error: invalid number of CPU. Set an even number of processors between 2 and 96 (or 1)."
-  }
+variable "tier" {
+  description = "The database tier (db-f1-micro, db-custom-cpu-ram)"
+  type        = string
+  default     = "db-f1-micro"
 }
 
-variable "ram" {
-  description = "Quantity of RAM (in Mb)."
-  type        = number
-}
-
-variable "disk_size" {
-  description = "Size of the db disk (in Gb)."
-  type        = number
-}
-
-variable "disk_autoresize_limit" {
+variable "disk_limit" {
   description = "The maximum size to which storage can be auto increased."
   type        = number
 }
 
-variable "high_availability" {
-  description = "Activate or not high availability for your DB."
-  type        = bool
-  default     = true
+variable "disk_type" {
+  description = "The disk type (PD_SSD, PD_HDD)."
+  type        = string
+  default     = "PD_SSD"
 }
 
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings."
-  default = {
-    binary_log_enabled             = false
-    enabled                        = false
-    start_time                     = "03:00" // Time when backcup configuration is starting
-    transaction_log_retention_days = "7"     // The number of days of transaction logs we retain for point in time restore, from 1-7.
-    retained_backups               = 7
-    retention_unit                 = "COUNT"
-  }
+  default     = {}
+  type        = any
 }
 
-variable "nb_replicas" {
-  description = "Number of read replicas you need."
-  type        = number
-  default     = 0
+variable "replicas" {
+  description = "replicas"
+  type        = map(any)
+  default     = {}
 }
 
 variable "db_collation" {
   description = "Collation for the DB."
   type        = string
-  default     = "utf8_general_ci"
+  default     = "utf8_general_ci" # MySQL Charset support: https://dev.mysql.com/doc/refman/8.0/en/charset-mysql.html
 }
 
 variable "db_charset" {
   description = "Charset for the DB."
   type        = string
-  default     = "utf8"
-}
-
-variable "ha_external_ip_range" {
-  type        = string
-  description = "The ip range to allow connecting from/to Cloud SQL."
-  default     = "192.10.10.10/32"
+  default     = "utf8" # MySQL Charset support: https://dev.mysql.com/doc/refman/8.0/en/charset-mysql.html
 }
 
 variable "instance_deletion_protection" {
@@ -99,11 +68,7 @@ variable "instance_deletion_protection" {
 
 variable "additional_databases" {
   description = "List of the default DBs you want to create."
-  type = list(object({
-    name      = string
-    charset   = string
-    collation = string
-  }))
+  type        = list(string)
 }
 
 variable "additional_users" {
@@ -111,25 +76,29 @@ variable "additional_users" {
   type        = list(string)
 }
 
-variable "vpc_network" {
-  description = "Name of the VPC within the instance SQL is deployed."
-  type        = string
+variable "database_flags" {
+  description = "Database configuration"
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  default = []
 }
 
-variable "assign_public_ip" {
+variable "public" {
   description = "Set to true if the master instance should also have a public IP (less secure)."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "require_ssl" {
-  description = "Set to false if you do not want to enforce SSL (less secure)."
+  description = "Set to false if you don not want to enforce SSL (less secure)."
   type        = bool
   default     = true
 }
 
 variable "private_network" {
-  description = "Define the CIDR of your private network."
+  description = "The vpc id."
   type        = string
 }
 
@@ -143,4 +112,16 @@ variable "create_secrets" {
   description = "Do we create the secrets in secret manager?"
   type        = bool
   default     = true
+}
+
+variable "labels" {
+  description = "Labels to add to the CloudSQL and its replicas"
+  type        = map(string)
+  default     = {}
+}
+
+variable "encryption_key_name" {
+  description = "KMS key to be used to encrypt database disk"
+  type        = string
+  default     = ""
 }

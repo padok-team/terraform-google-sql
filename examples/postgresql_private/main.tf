@@ -1,5 +1,4 @@
-# Example of code for deploying a private PostgreSQL DB with 2 replicas, and a peering between your private subnet and cloudsql service.
-# We also create two users : Kylian & Antoine (with strong passwords auto-generated)
+# Example of code for deploying a private PostgreSQL DB with a peering between your private subnet and cloudsql service.
 # To access to your DB, you need a bastion or a VPN connection from your client.
 locals {
   project_id = "padok-cloud-factory"
@@ -21,48 +20,37 @@ module "my_network" {
   name = "my-network-1"
   subnets = {
     "my-private-subnet-1" = {
-      cidr   = "10.31.0.0/16"
+      cidr   = "10.30.0.0/16"
       region = "europe-west3"
     }
   }
   peerings = {
     cloudsql = {
-      address = "10.0.18.0"
+      address = "10.0.17.0"
       prefix  = 24
     }
   }
 }
 
-
 module "my-private-postgresql-db" {
   source = "../../modules/postgresql"
 
-  name           = "my-private-db1" # Mandatory
-  engine_version = "POSTGRES_11"    # Mandatory
-  project_id     = local.project_id # Mandatory
-  zone           = "europe-west1-b" # Mandatory
-  region         = "europe-west1"
+  name           = "my-private-postgres-db1" # Mandatory
+  engine_version = "POSTGRES_11"             # Mandatory
+  project_id     = local.project_id          # Mandatory
+  location       = "europe-west1-b"          # Mandatory
 
-  nb_cpu = 2
-  ram    = 4096
+  disk_limit = 20
 
-  disk_size = 10
-  disk_autoresize_limit = 20
+  additional_users = ["User_1", "User_2"]
+  create_secrets   = true
 
-  nb_replicas = 1
+  backup_configuration = {
+    enabled  = true
+    location = "europe-west3"
+  }
 
-  additional_users = ["Kylian", "Antoine"]
-
-  additional_databases = [
-    {
-      name : "MYDB_1",
-      charset : "utf8"
-      collation : "en_US.UTF8"
-    }
-  ]
-  vpc_network = "default-europe-west1"
+  additional_databases = ["MYDB_1"]
 
   private_network = module.my_network.compute_network.id
-
-  create_secrets = true
 }

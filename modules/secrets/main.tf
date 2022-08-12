@@ -9,7 +9,7 @@ resource "random_password" "password" {
 resource "google_secret_manager_secret" "password" {
   for_each = { for u in var.users : u => u if var.create_secrets }
 
-  project  = var.project_id
+  project = var.project_id
 
   secret_id = "DATABASE_${upper(var.instance_name)}_${upper(each.key)}_PASSWORD"
 
