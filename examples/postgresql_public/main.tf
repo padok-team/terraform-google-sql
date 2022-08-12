@@ -20,18 +20,15 @@ module "my-public-postgresql-db" {
   name           = "my-public-db1"  # Mandatory
   engine_version = "POSTGRES_11"    # Mandatory
   project_id     = local.project_id # Mandatory
-  zone           = "europe-west1-b" # Mandatory
-  region         = "europe-west1"
+  location       = "europe-west1-b" # Mandatory
 
-  nb_cpu = 2
-  ram    = 4096
-
-  disk_size = 10
-  disk_autoresize_limit = 20
-
-  nb_replicas = 0
+  disk_limit = 20
 
   additional_users = ["Kylian", "Antoine"]
+
+  backup_configuration = {
+    location = "europe-west3"
+  }
 
   additional_databases = [
     {
@@ -40,11 +37,9 @@ module "my-public-postgresql-db" {
       collation : "en_US.UTF8"
     }
   ]
-  vpc_network = "default-europe-west1"
+  private_network = "projects/padok-cloud-factory/global/networks/default"
 
-  assign_public_ip = true
-
-  private_network = null
+  private = false
 
   #require_ssl = false   // By default, you need a valid certificate to connect to the DB as SSL is enabled. If you do not want this, uncomment this line.
 }

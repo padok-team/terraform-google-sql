@@ -8,43 +8,24 @@ variable "project_id" {
   type        = string
 }
 
-variable "zone" {
-  description = "The zone for the master instance, it should be something like: us-central1-a, us-east1-c, etc."
-  type        = string
-}
-
-variable "region" {
-  description = "The region for the master instance, it should be something like: us-central1-a, us-east1-c, etc."
+variable "location" {
+  description = "Region or Zone for the master instance, this will define if database is zonal or regional"
   type        = string
 }
 
 variable "engine_version" {
   description = "The version of PostgreSQL engine."
   type        = string
-  default     = "POSTGRES_11"
+  default     = "POSTGRES_14"
 }
 
-variable "nb_cpu" {
-  description = "Number of virtual processors."
-  type        = number
-
-  validation {
-    condition     = var.nb_cpu == 1 || (var.nb_cpu >= 2 && var.nb_cpu <= 96 && var.nb_cpu % 2 == 0) # https://cloud.google.com/sql/docs/postgres/create-instance#machine-types
-    error_message = "Error: invalid number of CPU. Set an even number of processors between 2 and 96 (or 1)."
-  }
+variable "tier" {
+  description = "The database tier (db-f1-micro, db-custom-cpu-ram)"
+  type        = string
+  default     = "db-f1-micro"
 }
 
-variable "ram" {
-  description = "Quantity of RAM (in Mb)."
-  type        = number
-}
-
-variable "disk_size" {
-  description = "Size of the db disk (in Gb)."
-  type        = number
-}
-
-variable "disk_autoresize_limit" {
+variable "disk_limit" {
   description = "The maximum size to which storage can be auto increased."
   type        = number
 }
@@ -57,20 +38,14 @@ variable "high_availability" {
 
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings."
-  default = {
-    point_in_time_recovery_enabled = false
-    enabled                        = false
-    start_time                     = "03:00" # Time when backcup configuration is starting
-    transaction_log_retention_days = "7"     # The number of days of transaction logs we retain for point in time restore, from 1-7.
-    retained_backups               = 7
-    retention_unit                 = "COUNT"
-  }
+  default     = {}
+  type        = any
 }
 
-variable "nb_replicas" {
-  description = "Number of read replicas you need."
-  type        = number
-  default     = 0
+variable "replicas" {
+  description = "replicas"
+  type        = map(any)
+  default     = {}
 }
 
 variable "db_collation" {
@@ -111,20 +86,23 @@ variable "additional_users" {
   type        = list(string)
 }
 
-variable "vpc_network" {
-  description = "Name of the VPC within the instance SQL is deployed."
-  type        = string
+variable "database_flags" {
+  description = "Database configuration"
+  type        = list(object({
+    name  = string
+    value = string
+  }))
+  default     = []
 }
 
-
-variable "assign_public_ip" {
+variable "private" {
   description = "Set to true if the master instance should also have a public IP (less secure)."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "require_ssl" {
-  description = "Set to false if you don not want to enforece SSL  (less secure)."
+  description = "Set to false if you don not want to enforce SSL (less secure)."
   type        = bool
   default     = true
 }
@@ -137,10 +115,23 @@ variable "private_network" {
 variable "allocated_ip_range" {
   description = "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the instance ip will be created in the allocated range."
   type        = string
+  default     = null
 }
 
 variable "create_secrets" {
   description = "Do we create the secrets in secret manager?"
   type        = bool
   default     = true
+}
+
+variable "labels" {
+  description = "Labels to add to the CloudSQL and its replicas"
+  type        = map(string)
+  default     = {}
+}
+
+variable "encryption_key_name" {
+  description = "KMS key to be used to encrypt database disk"
+  type        = string
+  default     = ""
 }

@@ -45,7 +45,7 @@ module "my-private-mysql-db" {
   nb_cpu = 2
   ram    = 4096
 
-  disk_size = 10
+  disk_size             = 10
   disk_autoresize_limit = 20
 
   nb_replicas = 2
@@ -62,6 +62,6 @@ module "my-private-mysql-db" {
   vpc_network = "default-europe-west1"
 
   private_network = module.my_network.compute_network.id
-  
+
   allocated_ip_range = "my-network-1-cloudsql"
 }

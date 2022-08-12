@@ -11,22 +11,22 @@ locals {
         value = var.ha_external_ip_range
       },
     ]
-    allocated_ip_range  = var.allocated_ip_range
+    allocated_ip_range = var.allocated_ip_range
   }
 
   replicas = [
     for x in range(0, var.nb_replicas) : {
-      name                = x
-      tier                = "db-custom-${var.nb_cpu}-${var.ram}"
-      zone                = var.zone
-      disk_type           = "PD_HDD"
-      disk_autoresize     = true
+      name                  = x
+      tier                  = "db-custom-${var.nb_cpu}-${var.ram}"
+      zone                  = var.zone
+      disk_type             = "PD_HDD"
+      disk_autoresize       = true
       disk_autoresize_limit = var.disk_autoresize_limit
-      disk_size           = var.disk_size
-      user_labels         = {}
-      database_flags      = []
-      ip_configuration    = local.read_replica_ip_configuration
-      encryption_key_name = null
+      disk_size             = var.disk_size
+      user_labels           = {}
+      database_flags        = []
+      ip_configuration      = local.read_replica_ip_configuration
+      encryption_key_name   = null
     }
   ]
 }
