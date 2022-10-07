@@ -68,13 +68,14 @@ module "postgresql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   version = "11.0.0"
 
-  name             = var.name           # Mandatory
-  database_version = var.engine_version # Mandatory
-  project_id       = var.project_id     # Mandatory
-  zone             = local.zone
-  region           = local.region
-  tier             = var.tier
-  user_labels      = var.labels
+  name                 = var.name # Mandatory
+  random_instance_name = true
+  database_version     = var.engine_version # Mandatory
+  project_id           = var.project_id     # Mandatory
+  zone                 = local.zone
+  region               = local.region
+  tier                 = var.tier
+  user_labels          = var.labels
 
   db_charset   = var.db_charset
   db_collation = var.db_collation
