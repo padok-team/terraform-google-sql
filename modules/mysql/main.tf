@@ -46,7 +46,7 @@ locals {
   }
   backup_configuration = merge(local.default_backup_configuration, var.backup_configuration)
 
-  additional_databases = [for n in var.additional_databases : {
+  additional_databases = [for n in var.databases : {
     name      = n
     collation = var.db_collation
     charset   = var.db_charset
@@ -59,7 +59,7 @@ module "secrets" {
 
   project_id     = var.project_id
   instance_name  = var.name
-  users          = var.additional_users
+  users          = var.users
   region         = local.region
   create_secrets = var.create_secrets
 }
@@ -103,7 +103,7 @@ module "mysql-db" {
 
   # Databases
   enable_default_db    = false
-  additional_databases = length(var.additional_databases) == 0 ? [] : local.additional_databases
+  additional_databases = length(var.databases) == 0 ? [] : local.additional_databases
 
   # Instance
   deletion_protection = var.instance_deletion_protection

@@ -23,9 +23,9 @@ output "private_ip_address" {
   value       = module.my-public-postgresql-db.private_ip_address
 }
 
-output "additional_users" {
+output "users" {
   description = "List of maps of additional users and passwords"
-  value = [for r in module.my-public-postgresql-db.additional_users :
+  value = [for r in module.my-public-postgresql-db.users :
     {
       name     = r.name
       password = r.password

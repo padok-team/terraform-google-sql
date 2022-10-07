@@ -42,15 +42,15 @@ module "my-private-postgresql-db" {
 
   disk_limit = 20
 
-  additional_users = ["User_1", "User_2"]
-  create_secrets   = true
+  users          = ["User_1", "User_2"]
+  create_secrets = true
 
   backup_configuration = {
     enabled  = true
     location = "europe-west3"
   }
 
-  additional_databases = ["MYDB_1"]
+  databases = ["MYDB_1"]
 
   private_network = module.my_network.compute_network.id
 }

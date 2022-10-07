@@ -66,12 +66,12 @@ variable "instance_deletion_protection" {
   default     = false
 }
 
-variable "additional_databases" {
+variable "databases" {
   description = "List of the default DBs you want to create."
   type        = list(string)
 }
 
-variable "additional_users" {
+variable "users" {
   description = "List of the User's name you want to create (passwords will be auto-generated). Warning! All those users will be admin and have access to all databases created with this module."
   type        = list(string)
 }
