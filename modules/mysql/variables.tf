@@ -88,7 +88,7 @@ variable "database_flags" {
 variable "public" {
   description = "Set to true if the master instance should also have a public IP (less secure)."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "require_ssl" {

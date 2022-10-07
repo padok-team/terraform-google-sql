@@ -13,11 +13,6 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
-output "public_ip_address" {
-  description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
-  value       = module.my-private-mysql-db.public_ip_address
-}
-
 output "private_ip_address" {
   description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
   value       = module.my-private-mysql-db.private_ip_address

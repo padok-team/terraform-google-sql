@@ -15,7 +15,7 @@ output "read_replica_instance_names" {
 
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance."
-  value       = module.mysql-db.public_ip_address
+  value       = var.public ? module.mysql-db.public_ip_address : ""
 }
 
 output "private_ip_address" {
