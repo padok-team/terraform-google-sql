@@ -15,21 +15,21 @@ provider "google-beta" {
 }
 
 module "my_network" {
-  source = "git@github.com:padok-team/terraform-google-network.git?ref=v2.0.3"
+  source = "git@github.com:padok-team/terraform-google-network.git?ref=v3.0.0"
 
-  name = "my-network-2"
+  name       = "my-network-2"
+  project_id = local.project_id
+
   subnets = {
     "my-private-subnet-2" = {
-      cidr   = "10.31.0.0/16"
-      region = "europe-west3"
+      name             = "my-private-subnet-2"
+      region           = "europe-west3"
+      primary_cidr     = "10.31.0.0/16"
+      serverless_cidr  = ""
+      secondary_ranges = {}
     }
   }
-  peerings = {
-    cloudsql = {
-      address = "10.0.18.0"
-      prefix  = 24
-    }
-  }
+  gcp_peering_cidr = "10.0.18.0/24"
 }
 
 module "my-public-postgresql-db" {

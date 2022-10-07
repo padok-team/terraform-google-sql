@@ -5,11 +5,17 @@ data "google_compute_zones" "this" {
   region  = local.is_region ? var.location : local.region
 }
 
+# Select a zone randomly
+resource "random_shuffle" "zone" {
+  input        = data.google_compute_zones.this.names
+  result_count = 1
+}
+
 locals {
   splitted_location = split("-", var.location)
   is_region         = length(local.splitted_location) == 2
   region            = local.is_region ? var.location : substr(var.location, 0, length(var.location) - 2)
-  zone              = local.is_region ? data.google_compute_zones.this.names[0] : var.location
+  zone              = local.is_region ? random_shuffle.zone.result[0] : var.location
   ip_configuration = {
     ipv4_enabled = var.public
     # We never set authorized networks, we need all connections via the
