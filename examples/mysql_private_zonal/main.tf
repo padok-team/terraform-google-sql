@@ -35,10 +35,11 @@ module "my_network" {
 module "my-private-mysql-db" {
   source = "../../modules/mysql"
 
-  name           = "my-private-mysql-db1" # Mandatory
-  engine_version = "MYSQL_8_0"            # Mandatory
-  project_id     = local.project_id       # Mandatory
-  location       = "europe-west1-b"       # Mandatory
+  name              = "my-private-mysql-db1" # Mandatory
+  engine_version    = "MYSQL_8_0"            # Mandatory
+  project_id        = local.project_id       # Mandatory
+  region            = "europe-west1"         # Mandatory
+  availability_type = "ZONAL"
 
   disk_limit = 20
 

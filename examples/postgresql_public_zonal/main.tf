@@ -35,10 +35,11 @@ module "my_network" {
 module "my-public-postgresql-db" {
   source = "../../modules/postgresql"
 
-  name           = "my-public-postgres-db1" # Mandatory
-  engine_version = "POSTGRES_11"            # Mandatory
-  project_id     = local.project_id         # Mandatory
-  location       = "europe-west1-b"         # Mandatory
+  name              = "my-public-postgres-db1" # Mandatory
+  engine_version    = "POSTGRES_11"            # Mandatory
+  project_id        = local.project_id         # Mandatory
+  region            = "europe-west1"           # Mandatory
+  availability_type = "ZONAL"
 
   disk_limit = 20
 
@@ -52,7 +53,7 @@ module "my-public-postgresql-db" {
 
   databases = ["MYDB_1"]
 
-  private_network = module.my_network.compute_network.id
+  private_network = module.my_network.network_id
 
   public = true
 }

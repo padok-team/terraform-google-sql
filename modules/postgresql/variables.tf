@@ -8,9 +8,23 @@ variable "project_id" {
   type        = string
 }
 
-variable "location" {
-  description = "Region or Zone for the master instance, this will define if database is zonal or regional"
+variable "region" {
+  description = "Region for the master instance"
   type        = string
+  validation {
+    condition     = length(split("-", var.region)) == 2
+    error_message = "This is not a region"
+  }
+}
+
+variable "availability_type" {
+  description = "Is CloudSQL instance Regional or Zonal correct values = (REGIONAL|ZONAL)"
+  type        = string
+  validation {
+    condition     = var.availability_type == "REGIONAL" || var.availability_type == "ZONAL"
+    error_message = "availability_type only supports REGIONAL or ZONAL"
+  }
+  default = "REGIONAL"
 }
 
 variable "engine_version" {

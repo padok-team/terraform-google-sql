@@ -2,7 +2,7 @@
 # TODO: Datasource to fail fast if backup region is not specified
 data "google_compute_zones" "this" {
   project = var.project_id
-  region  = local.is_region ? var.location : local.region
+  region  = var.region
 }
 
 # Select a zone randomly
@@ -12,10 +12,7 @@ resource "random_shuffle" "zone" {
 }
 
 locals {
-  splitted_location = split("-", var.location)
-  is_region         = length(local.splitted_location) == 2
-  region            = local.is_region ? var.location : substr(var.location, 0, length(var.location) - 2)
-  zone              = local.is_region ? random_shuffle.zone.result[0] : var.location
+  zone = random_shuffle.zone.result[0]
   ip_configuration = {
     ipv4_enabled = var.public
     # We never set authorized networks, we need all connections via the
@@ -65,7 +62,7 @@ module "secrets" {
   project_id     = var.project_id
   instance_name  = var.name
   users          = var.users
-  region         = local.region
+  region         = var.region
   create_secrets = var.create_secrets
 }
 
@@ -79,7 +76,7 @@ module "postgresql-db" {
   database_version     = var.engine_version # Mandatory
   project_id           = var.project_id     # Mandatory
   zone                 = local.zone
-  region               = local.region
+  region               = var.region
   tier                 = var.tier
   user_labels          = var.labels
 
@@ -95,7 +92,7 @@ module "postgresql-db" {
   database_flags = var.database_flags
 
   # High Availability
-  availability_type = local.is_region ? "REGIONAL" : "ZONAL"
+  availability_type = var.availability_type
 
   # Backup
   backup_configuration = local.backup_configuration
