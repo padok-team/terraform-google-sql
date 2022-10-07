@@ -1,31 +1,31 @@
 output "instance_name" {
-  value       = module.my-private-postgresql-db.instance_name
+  value       = module.my-public-mysql-db.instance_name
   description = "The instance name for the master instance"
 }
 
 output "instance_connection_name" {
-  value       = module.my-private-postgresql-db.instance_connection_name
+  value       = module.my-public-mysql-db.instance_connection_name
   description = "The connection name of the master instance to be used in connection strings"
 }
 
 output "read_replica_instance_names" {
-  value       = module.my-private-postgresql-db.read_replica_instance_names
+  value       = module.my-public-mysql-db.read_replica_instance_names
   description = "The instance names for the read replica instances"
 }
 
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
-  value       = module.my-private-postgresql-db.public_ip_address
+  value       = module.my-public-mysql-db.public_ip_address
 }
 
 output "private_ip_address" {
   description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
-  value       = module.my-private-postgresql-db.private_ip_address
+  value       = module.my-public-mysql-db.private_ip_address
 }
 
-output "additional_users" {
+output "users" {
   description = "List of maps of additional users and passwords"
-  value = [for r in module.my-private-postgresql-db.additional_users :
+  value = [for r in module.my-public-mysql-db.users :
     {
       name     = r.name
       password = r.password

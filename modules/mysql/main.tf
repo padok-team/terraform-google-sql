@@ -1,14 +1,18 @@
 # Official Google module for MySQL: https://github.com/terraform-google-modules/terraform-google-sql-db/tree/master/modules/mysql
 # TODO: Datasource to fail fast if backup region is not specified
 data "google_compute_zones" "this" {
-  region = local.is_region ? var.location : local.region
+  project = var.project_id
+  region  = var.region
+}
+
+# Select a zone randomly
+resource "random_shuffle" "zone" {
+  input        = data.google_compute_zones.this.names
+  result_count = 1
 }
 
 locals {
-  splitted_location = split("-", var.location)
-  is_region         = length(local.splitted_location) == 2
-  region            = local.is_region ? var.location : substr(var.location, 0, length(var.location) - 2)
-  zone              = local.is_region ? data.google_compute_zones.this.names[0] : var.location
+  zone = random_shuffle.zone.result[0]
   ip_configuration = {
     ipv4_enabled = var.public
     # We never set authorized networks, we need all connections via the
@@ -45,7 +49,7 @@ locals {
   }
   backup_configuration = merge(local.default_backup_configuration, var.backup_configuration)
 
-  additional_databases = [for n in var.additional_databases : {
+  additional_databases = [for n in var.databases : {
     name      = n
     collation = var.db_collation
     charset   = var.db_charset
@@ -58,8 +62,8 @@ module "secrets" {
 
   project_id     = var.project_id
   instance_name  = var.name
-  users          = var.additional_users
-  region         = local.region
+  users          = var.users
+  region         = var.region
   create_secrets = var.create_secrets
 }
 
@@ -68,13 +72,14 @@ module "mysql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
   version = "11.0.0"
 
-  name             = var.name           # Mandatory
-  database_version = var.engine_version # Mandatory
-  project_id       = var.project_id     # Mandatory
-  zone             = local.zone
-  region           = local.region
-  tier             = var.tier
-  user_labels      = var.labels
+  name                 = var.name # Mandatory
+  random_instance_name = true
+  database_version     = var.engine_version # Mandatory
+  project_id           = var.project_id     # Mandatory
+  zone                 = local.zone
+  region               = var.region
+  tier                 = var.tier
+  user_labels          = var.labels
 
   db_charset   = var.db_charset
   db_collation = var.db_collation
@@ -88,7 +93,7 @@ module "mysql-db" {
   database_flags = var.database_flags
 
   # High Availability
-  availability_type = local.is_region ? "REGIONAL" : "ZONAL"
+  availability_type = var.availability_type
 
   # Backup
   backup_configuration = local.backup_configuration
@@ -102,7 +107,7 @@ module "mysql-db" {
 
   # Databases
   enable_default_db    = false
-  additional_databases = length(var.additional_databases) == 0 ? [] : local.additional_databases
+  additional_databases = length(var.databases) == 0 ? [] : local.additional_databases
 
   # Instance
   deletion_protection = var.instance_deletion_protection

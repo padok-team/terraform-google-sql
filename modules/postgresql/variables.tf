@@ -8,9 +8,23 @@ variable "project_id" {
   type        = string
 }
 
-variable "location" {
-  description = "Region or Zone for the master instance, this will define if database is zonal or regional"
+variable "region" {
+  description = "Region for the master instance"
   type        = string
+  validation {
+    condition     = length(split("-", var.region)) == 2
+    error_message = "This is not a region"
+  }
+}
+
+variable "availability_type" {
+  description = "Is CloudSQL instance Regional or Zonal correct values = (REGIONAL|ZONAL)"
+  type        = string
+  validation {
+    condition     = var.availability_type == "REGIONAL" || var.availability_type == "ZONAL"
+    error_message = "availability_type only supports REGIONAL or ZONAL"
+  }
+  default = "REGIONAL"
 }
 
 variable "engine_version" {
@@ -66,12 +80,12 @@ variable "instance_deletion_protection" {
   default     = false
 }
 
-variable "additional_databases" {
+variable "databases" {
   description = "List of the default DBs you want to create."
   type        = list(string)
 }
 
-variable "additional_users" {
+variable "users" {
   description = "List of the User's name you want to create (passwords will be auto-generated). Warning! All those users will be admin and have access to all databases created with this module."
   type        = list(string)
 }
@@ -88,7 +102,7 @@ variable "database_flags" {
 variable "public" {
   description = "Set to true if the master instance should also have a public IP (less secure)."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "require_ssl" {

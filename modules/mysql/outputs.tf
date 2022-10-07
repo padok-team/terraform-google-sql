@@ -15,7 +15,7 @@ output "read_replica_instance_names" {
 
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance."
-  value       = module.mysql-db.public_ip_address
+  value       = var.public ? module.mysql-db.public_ip_address : ""
 }
 
 output "private_ip_address" {
@@ -23,8 +23,8 @@ output "private_ip_address" {
   value       = module.mysql-db.private_ip_address
 }
 
-output "additional_users" {
-  description = "List of maps of additional users and passwords."
+output "users" {
+  description = "List of maps of users and passwords."
   value = [for r in module.mysql-db.additional_users :
     {
       name     = r.name
