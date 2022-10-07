@@ -1,7 +1,8 @@
 # Official Google module for PostgreSQL: https://github.com/terraform-google-modules/terraform-google-sql-db/tree/master/modules/postgresql
 # TODO: Datasource to fail fast if backup region is not specified
 data "google_compute_zones" "this" {
-  region = local.is_region ? var.location : local.region
+  project = var.project_id
+  region  = local.is_region ? var.location : local.region
 }
 
 locals {
