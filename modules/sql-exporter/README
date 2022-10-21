@@ -1,0 +1,50 @@
+# Google SQL Exporter Terraform module
+
+Terraform module which creates a Cloud Function to schedule SQL exports in a GCS bucket.
+
+## User Stories for this module
+
+- AASRE I have SQL exports available even if my SQL instance is down
+
+## Usage
+
+```hcl
+module "sql_exporter" {
+  source = "git@github.com:padok-team/terraform-google-dns.git"
+
+  name = "my-awesome-exporter"
+
+  project_id = "my-google-project
+  region  = "europe-west3"
+}
+```
+
+## Examples
+
+- [Basic](examples/basic/main.tf)
+- [Custom lifecycle](examples/custom-lifecycle/main.tf)
+
+<!-- BEGIN_TF_DOCS -->
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_function"></a> [function](#module\_function) | terraform-google-modules/event-function/google | ~> 2.3.0 |
+| <a name="module_pubsub_topic"></a> [pubsub\_topic](#module\_pubsub\_topic) | terraform-google-modules/pubsub/google | ~> 3.2.0 |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_name"></a> [name](#input\_name) | Unique name to give to all created resources. | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The Google project ID. | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | The region of your SQL instance. | `string` | n/a | yes |
+| <a name="input_lifecycle_rules"></a> [lifecycle\_rules](#input\_lifecycle\_rules) | The lifecycle rules to use for the export bucket. | <pre>list(object({<br>    condition = object({<br>      age = string<br>    })<br>    action = object({<br>      storage_class = string<br>    })<br>  }))</pre> | <pre>[<br>  {<br>    "action": {<br>      "storage_class": "NEARLINE"<br>    },<br>    "condition": {<br>      "age": "30"<br>    }<br>  },<br>  {<br>    "action": {<br>      "storage_class": "COLDLINE"<br>    },<br>    "condition": {<br>      "age": "90"<br>    }<br>  },<br>  {<br>    "action": {<br>      "storage_class": "ARCHIVE"<br>    },<br>    "condition": {<br>      "age": "365"<br>    }<br>  }<br>]</pre> | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_bucket_name"></a> [bucket_name](#output\_bucket\_name) | The name of the bucket in which export files will be kept |
+| <a name="output_pubsub_topic"></a> [pubsub_topic](#output\_pubsub\_topic) | The pubsub topic id |
+<!-- END_TF_DOCS -->
