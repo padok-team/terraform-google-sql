@@ -126,7 +126,7 @@ resource "google_storage_bucket_iam_member" "exporter" {
   for_each = var.sql_exporter.bucket_name != "" ? toset(["1"]) : toset([])
   bucket   = var.sql_exporter.bucket_name
   role     = "roles/storage.admin"
-  member   = "serviceAccount:${module.postgresql-db.instance_service_account_email_address}"
+  member   = "serviceAccount:${module.mysql-db.instance_service_account_email_address}"
 }
 
 resource "google_cloud_scheduler_job" "exporter" {
@@ -140,7 +140,7 @@ resource "google_cloud_scheduler_job" "exporter" {
 
   pubsub_target {
     topic_name = var.sql_exporter.pubsub_topic
-    data       = base64encode("{\"Db\": \"${each.key}\", \"Instance\": \"${module.postgresql-db.instance_name}\", \"Project\": \"${var.project_id}\", \"Gs\": \"gs://${var.sql_exporter.bucket_name}\"}")
+    data       = base64encode("{\"Db\": \"${each.key}\", \"Instance\": \"${module.mysql-db.instance_name}\", \"Project\": \"${var.project_id}\", \"Gs\": \"gs://${var.sql_exporter.bucket_name}\"}")
   }
 }
 
