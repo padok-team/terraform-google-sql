@@ -140,3 +140,19 @@ variable "encryption_key_name" {
   type        = string
   default     = ""
 }
+
+variable "sql_exporter" {
+  description = "The SQL exporter to use for backups if needed."
+  type = object({
+    bucket_name  = string
+    pubsub_topic = string
+    schedule     = string
+    timezone     = string
+  })
+  default = {
+    bucket_name  = ""
+    pubsub_topic = ""
+    schedule     = ""
+    timezone     = ""
+  }
+}
