@@ -1,11 +1,14 @@
-# CLOUD_PROVIDER TYPE Terraform module
+# SQL Terraform module
 
-Terraform module which creates **TYPE** resources on **CLOUD_PROVIDER**. This module is an abstraction of the [MODULE_NAME](https://github.com/a_great_module) by [@someoneverysmart](https://github.com/someoneverysmart).
+Terraform module which creates **SQL** resources, secrets and backups on **GCP**. This module uses the [sql-db module](https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/latest) by GoogleCloudPlatform.
 
 ## User Stories for this module
 
-- AATYPE I can be highly available or single zone
-- ...
+- AASQL / POSTGRES INSTANCE I can be highly available or single zone
+- AASQL / POSTGRES INSTANCE I can be fully private or have a public ip
+- AASQL / POSTGRES INSTANCE I can have db users and store their passwords in secret manager
+- AASQL / POSTGRES INSTANCE I can have multiple dbs
+- AASQL / POSTGRES INSTANCE I can have custom exporter to schedule backups in a bucket
 
 ## Usage
 
@@ -19,8 +22,14 @@ module "example" {
 
 ## Examples
 
-- [Example of use case](examples/example_of_use_case/main.tf)
-- [Example of other use case](examples/example_of_other_use_case/main.tf)
+- [MySQL instance private and zonal](examples/example_of_use_case/main.tf)
+- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
+- [MySQL instance public, regional](examples/example_of_other_use_case/main.tf)
+- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
+- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
+
+
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Modules
