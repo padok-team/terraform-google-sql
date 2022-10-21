@@ -130,10 +130,10 @@ resource "google_storage_bucket_iam_member" "exporter" {
 }
 
 resource "google_cloud_scheduler_job" "exporter" {
-  for_each    = var.sql_exporter.bucket_name != "" ? toset(var.additional_databases) : toset([])
+  for_each    = var.sql_exporter.bucket_name != "" ? toset(var.databases) : toset([])
   name        = "${each.key}-exporter"
   project     = var.project_id
-  region      = local.region
+  region      = var.region
   description = "exporter"
   schedule    = var.sql_exporter.schedule
   time_zone   = var.sql_exporter.timezone
@@ -143,4 +143,3 @@ resource "google_cloud_scheduler_job" "exporter" {
     data       = base64encode("{\"Db\": \"${each.key}\", \"Instance\": \"${module.mysql-db.instance_name}\", \"Project\": \"${var.project_id}\", \"Gs\": \"gs://${var.sql_exporter.bucket_name}\"}")
   }
 }
-
