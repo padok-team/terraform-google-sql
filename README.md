@@ -12,41 +12,48 @@ Terraform module which creates **SQL** resources, secrets and backups on **GCP**
 
 ## Usage
 
-```hcl
-module "example" {
-  source = "https://github.com/padok-team/terraform-aws-example"
+### Databases
 
-  example_of_required_variable = "hello_world"
-}
-```
+You can use either mysql or postgresql module to create databases instances in GCP. These modules optionnally include [secrets](modules/secrets) module to create secrets in google secret manager with password values for each user.
+
+### SQL Exporter
+
+This module creates a storage bucket and a cloud function to export database backups in buckets. In order to schedule backups on a regular basis, you need to create a cloud scheduler outside of the sql exporter module. In [mysql](modules/mysql) and [postgresql](modules/postgresql) modules, you can optionnally enable and configure these schedulers for each databases.
+
+:warning: Althought we do not recommend creating different databases in the same instance, simultaneous backups for databases in the same instance. If you are in this situation, please be careful to schedule backups for your databases apart from each other to avoid failed backups.
 
 ## Examples
 
-- [MySQL instance private and zonal](examples/example_of_use_case/main.tf)
-- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
-- [MySQL instance public, regional](examples/example_of_other_use_case/main.tf)
-- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
-- [MySQL instance private, zonal with backup](examples/example_of_other_use_case/main.tf)
+Examples might need to run `terraform apply` twice because of a race condition with the network. This would not be needed in normal configurations as the network would be created somewhere else.
 
+- [MySQL instance private and zonal](examples/mysql_private_zonal)
+- [MySQL instance public and regional](examples/mysql_public_regional)
+- [MySQL instance public, zonal, with backup exporter](examples/mysql_public_with_exporter)
+- [POSTGRES instance private and regional](examples/postgresql_private_regional)
+- [POSTGRES instance public and zonal](examples/postgresql_public_zonal)
+- [POSTGRES instance public, regional, with backup](examples/postgresql_private_with_exporter)
 
+## License
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-<!-- BEGIN_TF_DOCS -->
-## Modules
+See [LICENSE](LICENSE) for full details.
 
-No modules.
+```text
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
-## Inputs
+  https://www.apache.org/licenses/LICENSE-2.0
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_example_of_required_variable"></a> [example\_of\_required\_variable](#input\_example\_of\_required\_variable) | Short description of the variable | `string` | n/a | yes |
-| <a name="input_example_with_validation"></a> [example\_with\_validation](#input\_example\_with\_validation) | Short description of the variable | `list(string)` | n/a | yes |
-| <a name="input_example_of_variable_with_default_value"></a> [example\_of\_variable\_with\_default\_value](#input\_example\_of\_variable\_with\_default\_value) | Short description of the variable | `string` | `"default_value"` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_example"></a> [example](#output\_example) | A meaningful description |
-<!-- END_TF_DOCS -->
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+```
