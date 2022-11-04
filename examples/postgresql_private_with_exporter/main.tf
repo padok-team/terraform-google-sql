@@ -32,6 +32,16 @@ module "my_network" {
   gcp_peering_cidr = "10.0.17.0/24"
 }
 
+module "my-sql-exporter" {
+  source = "../../modules/sql-exporter"
+
+  name = "my-exporter-2"
+
+  project_id = local.project_id
+  region     = "europe-west3"
+}
+
+
 module "my-private-postgresql-db" {
   source = "../../modules/postgresql"
 
@@ -51,8 +61,21 @@ module "my-private-postgresql-db" {
     location = "europe-west3"
   }
 
+  sql_exporter = {
+    bucket_name  = module.my-sql-exporter.bucket_name
+    pubsub_topic = module.my-sql-exporter.pubsub_topic
+  }
+
   databases = {
     "MYDB_1" = {
+      export_backup   = true
+      export_schedule = "0 5 * * *"
+    }
+    "MYDB_2" = {
+      export_backup   = true
+      export_schedule = "0 8 * * *"
+    }
+    "MYDB_3" = {
       export_backup = false
     }
   }

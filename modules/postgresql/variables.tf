@@ -9,7 +9,7 @@ variable "project_id" {
 }
 
 variable "region" {
-  description = "Region for the master instance"
+  description = "Region for the master instance."
   type        = string
   validation {
     condition     = length(split("-", var.region)) == 2
@@ -18,7 +18,7 @@ variable "region" {
 }
 
 variable "availability_type" {
-  description = "Is CloudSQL instance Regional or Zonal correct values = (REGIONAL|ZONAL)"
+  description = "Is CloudSQL instance Regional or Zonal correct values = (REGIONAL|ZONAL)."
   type        = string
   validation {
     condition     = var.availability_type == "REGIONAL" || var.availability_type == "ZONAL"
@@ -27,6 +27,7 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
+
 variable "engine_version" {
   description = "The version of PostgreSQL engine. Check https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version for possible versions."
   type        = string
@@ -34,10 +35,11 @@ variable "engine_version" {
 }
 
 variable "tier" {
-  description = "The database tier (db-f1-micro, db-custom-cpu-ram)"
+  description = "The database tier (db-f1-micro, db-custom-cpu-ram)."
   type        = string
   default     = "db-f1-micro"
 }
+
 
 variable "disk_limit" {
   description = "The maximum size to which storage can be auto increased."
@@ -57,7 +59,7 @@ variable "backup_configuration" {
 }
 
 variable "replicas" {
-  description = "replicas"
+  description = "The replicas instance names and configuration."
   type        = map(any)
   default     = {}
 }
@@ -82,7 +84,11 @@ variable "instance_deletion_protection" {
 
 variable "databases" {
   description = "List of the default DBs you want to create."
-  type        = list(string)
+  type = map(object({
+    export_backup   = bool
+    export_schedule = optional(string, "0 2 * * *")
+  }))
+  default = {}
 }
 
 variable "users" {
@@ -91,7 +97,7 @@ variable "users" {
 }
 
 variable "database_flags" {
-  description = "Database configuration"
+  description = "Database configuration flags."
   type = list(object({
     name  = string
     value = string
@@ -112,7 +118,7 @@ variable "require_ssl" {
 }
 
 variable "private_network" {
-  description = "The vpc id."
+  description = "The vpc id to create the instance into."
   type        = string
   default     = null
 }
@@ -130,13 +136,23 @@ variable "create_secrets" {
 }
 
 variable "labels" {
-  description = "Labels to add to the CloudSQL and its replicas"
+  description = "Labels to add to the CloudSQL and its replicas."
   type        = map(string)
   default     = {}
 }
 
 variable "encryption_key_name" {
-  description = "KMS key to be used to encrypt database disk"
+  description = "KMS key to be used to encrypt database disk."
   type        = string
   default     = ""
+}
+
+variable "sql_exporter" {
+  description = "The SQL exporter to use for backups if needed."
+  type = object({
+    bucket_name  = string
+    pubsub_topic = string
+    timezone     = optional(string, "UTC")
+  })
+  default = null
 }

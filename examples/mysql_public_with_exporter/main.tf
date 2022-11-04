@@ -14,31 +14,40 @@ provider "google-beta" {
   region  = "europe-west3"
 }
 
-module "my_network" {
+module "my-network" {
   source = "git@github.com:padok-team/terraform-google-network.git?ref=v3.0.0"
 
-  name       = "my-network-3"
+  name       = "my-network-6"
   project_id = local.project_id
 
   subnets = {
     "my-private-subnet-3" = {
-      name             = "my-private-subnet-3"
+      name             = "my-private-subnet-6"
       region           = "europe-west3"
-      primary_cidr     = "10.32.0.0/16"
+      primary_cidr     = "10.35.0.0/16"
       serverless_cidr  = ""
       secondary_ranges = {}
     }
   }
-  gcp_peering_cidr = "10.0.19.0/24"
+  gcp_peering_cidr = "10.0.22.0/24"
 }
 
-module "my-private-mysql-db" {
+module "my-sql-exporter" {
+  source = "../../modules/sql-exporter"
+
+  name = "my-exporter-1"
+
+  project_id = local.project_id
+  region     = "europe-west3"
+}
+
+module "my-public-mysql-db-with-backup" {
   source = "../../modules/mysql"
 
-  name              = "my-private-mysql-db1" # Mandatory
-  engine_version    = "MYSQL_8_0"            # Mandatory
-  project_id        = local.project_id       # Mandatory
-  region            = "europe-west1"         # Mandatory
+  name              = "my-public-mysql-db2" # Mandatory
+  engine_version    = "MYSQL_8_0"           # Mandatory
+  project_id        = local.project_id      # Mandatory
+  region            = "europe-west1"        # Mandatory
   availability_type = "ZONAL"
 
   disk_limit = 20
@@ -51,11 +60,20 @@ module "my-private-mysql-db" {
     location = "europe-west3"
   }
 
+  sql_exporter = {
+    bucket_name  = module.my-sql-exporter.bucket_name
+    pubsub_topic = module.my-sql-exporter.pubsub_topic
+    timezone     = "UTC+1"
+  }
+
   databases = {
     "MYDB_1" = {
-      export_backup = false
+      export_backup   = true
+      export_schedule = "0 3 * * *"
     }
   }
 
-  private_network = module.my_network.network_id
+  private_network = module.my-network.network_id
+
+  public = true
 }
