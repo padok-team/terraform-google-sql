@@ -86,28 +86,28 @@ module "my-private-postgresql-db" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allocated_ip_range"></a> [allocated\_ip\_range](#input\_allocated\_ip\_range) | The name of the allocated ip range for the private ip CloudSQL instance. For example: "google-managed-services-default". If set, the instance ip will be created in the allocated range. | `string` | `null` | no |
-| <a name="input_availability_type"></a> [availability\_type](#input\_availability\_type) | Is CloudSQL instance Regional or Zonal correct values = (REGIONAL\|ZONAL) | `string` | `"REGIONAL"` | no |
+| <a name="input_availability_type"></a> [availability\_type](#input\_availability\_type) | Is CloudSQL instance Regional or Zonal correct values = (REGIONAL\|ZONAL). | `string` | `"REGIONAL"` | no |
 | <a name="input_backup_configuration"></a> [backup\_configuration](#input\_backup\_configuration) | The backup\_configuration settings subblock for the database setings. | `any` | `{}` | no |
 | <a name="input_create_secrets"></a> [create\_secrets](#input\_create\_secrets) | Do we create the secrets in secret manager? | `bool` | `true` | no |
-| <a name="input_database_flags"></a> [database\_flags](#input\_database\_flags) | Database configuration | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_database_flags"></a> [database\_flags](#input\_database\_flags) | Database configuration flags. | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_databases"></a> [databases](#input\_databases) | List of the default DBs you want to create. | <pre>map(object({<br>    export_backup   = bool<br>    export_schedule = optional(string, "0 2 * * *")<br>  }))</pre> | `{}` | no |
 | <a name="input_db_charset"></a> [db\_charset](#input\_db\_charset) | Charset for the DB. | `string` | `"utf8"` | no |
 | <a name="input_db_collation"></a> [db\_collation](#input\_db\_collation) | Collation for the DB. | `string` | `"en_US.UTF8"` | no |
 | <a name="input_disk_limit"></a> [disk\_limit](#input\_disk\_limit) | The maximum size to which storage can be auto increased. | `number` | n/a | yes |
 | <a name="input_disk_type"></a> [disk\_type](#input\_disk\_type) | The disk type (PD\_SSD, PD\_HDD). | `string` | `"PD_SSD"` | no |
-| <a name="input_encryption_key_name"></a> [encryption\_key\_name](#input\_encryption\_key\_name) | KMS key to be used to encrypt database disk | `string` | `""` | no |
+| <a name="input_encryption_key_name"></a> [encryption\_key\_name](#input\_encryption\_key\_name) | KMS key to be used to encrypt database disk. | `string` | `""` | no |
 | <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The version of PostgreSQL engine. Check https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version for possible versions. | `string` | `"POSTGRES_14"` | no |
 | <a name="input_instance_deletion_protection"></a> [instance\_deletion\_protection](#input\_instance\_deletion\_protection) | Used to block Terraform from deleting a SQL Instance. | `bool` | `false` | no |
-| <a name="input_labels"></a> [labels](#input\_labels) | Labels to add to the CloudSQL and its replicas | `map(string)` | `{}` | no |
+| <a name="input_labels"></a> [labels](#input\_labels) | Labels to add to the CloudSQL and its replicas. | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the Cloud SQL resource. | `string` | n/a | yes |
-| <a name="input_private_network"></a> [private\_network](#input\_private\_network) | The vpc id. | `string` | `null` | no |
+| <a name="input_private_network"></a> [private\_network](#input\_private\_network) | The vpc id to create the instance into. | `string` | `null` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project ID to manage the Cloud SQL resource. | `string` | n/a | yes |
 | <a name="input_public"></a> [public](#input\_public) | Set to true if the master instance should also have a public IP (less secure). | `bool` | `false` | no |
-| <a name="input_region"></a> [region](#input\_region) | Region for the master instance | `string` | n/a | yes |
-| <a name="input_replicas"></a> [replicas](#input\_replicas) | replicas | `map(any)` | `{}` | no |
+| <a name="input_region"></a> [region](#input\_region) | Region for the master instance. | `string` | n/a | yes |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | The replicas instance names and configuration. | `map(any)` | `{}` | no |
 | <a name="input_require_ssl"></a> [require\_ssl](#input\_require\_ssl) | Set to false if you don not want to enforce SSL (less secure). | `bool` | `true` | no |
 | <a name="input_sql_exporter"></a> [sql\_exporter](#input\_sql\_exporter) | The SQL exporter to use for backups if needed. | <pre>object({<br>    bucket_name  = string<br>    pubsub_topic = string<br>    timezone     = optional(string, "UTC")<br>  })</pre> | `null` | no |
-| <a name="input_tier"></a> [tier](#input\_tier) | The database tier (db-f1-micro, db-custom-cpu-ram) | `string` | `"db-f1-micro"` | no |
+| <a name="input_tier"></a> [tier](#input\_tier) | The database tier (db-f1-micro, db-custom-cpu-ram). | `string` | `"db-f1-micro"` | no |
 | <a name="input_users"></a> [users](#input\_users) | List of the User's name you want to create (passwords will be auto-generated). Warning! All those users will be admin and have access to all databases created with this module. | `list(string)` | n/a | yes |
 
 ## Outputs
