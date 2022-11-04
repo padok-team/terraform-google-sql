@@ -60,16 +60,20 @@ module "my-public-mysql-db-with-backup" {
     location = "europe-west3"
   }
 
-  databases = ["MYDB_1"]
-
-  private_network = module.my-network.network_id
-
   sql_exporter = {
     bucket_name  = module.my-sql-exporter.bucket_name
     pubsub_topic = module.my-sql-exporter.pubsub_topic
-    schedule     = "0 2 * * *"
-    timezone     = "UTC"
+    timezone     = "UTC+1"
   }
+
+  databases = {
+    "MYDB_1" = {
+      export_backup   = true
+      export_schedule = "0 3 * * *"
+    }
+  }
+
+  private_network = module.my-network.network_id
 
   public = true
 }

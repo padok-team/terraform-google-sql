@@ -51,7 +51,11 @@ module "my-private-mysql-db" {
     location = "europe-west3"
   }
 
-  databases = ["MYDB_1"]
+  databases = {
+    "MYDB_1" = {
+      export_backup = false
+    }
+  }
 
   private_network = module.my_network.network_id
 }
