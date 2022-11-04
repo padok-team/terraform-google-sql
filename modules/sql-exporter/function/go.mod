@@ -1,6 +1,6 @@
 module github.com/padok-team/terraform-google-sql-exporter/function
 
-go 1.18
+go 1.19
 
 require (
 	golang.org/x/oauth2 v0.0.0-20220718184931-c8730f7fcb92
