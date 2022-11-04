@@ -69,7 +69,7 @@ module "secrets" {
 # Instance
 module "postgresql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "11.0.0"
+  version = "12.1.0"
 
   name                 = var.name # Mandatory
   random_instance_name = true
