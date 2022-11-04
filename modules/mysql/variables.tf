@@ -82,7 +82,11 @@ variable "instance_deletion_protection" {
 
 variable "databases" {
   description = "List of the default DBs you want to create."
-  type        = list(string)
+  type = map(object({
+    export_backup   = bool
+    export_schedule = optional(string, "0 2 * * *")
+  }))
+  default = {}
 }
 
 variable "users" {
@@ -145,13 +149,7 @@ variable "sql_exporter" {
   type = object({
     bucket_name  = string
     pubsub_topic = string
-    schedule     = string
-    timezone     = string
+    timezone     = optional(string, "UTC")
   })
-  default = {
-    bucket_name  = ""
-    pubsub_topic = ""
-    schedule     = ""
-    timezone     = ""
-  }
+  default = null
 }
