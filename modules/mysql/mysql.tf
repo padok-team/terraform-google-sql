@@ -50,7 +50,7 @@ module "mysql-db" {
   deletion_protection = var.instance_deletion_protection
 
   # Encryption
-  encryption_key_name = var.encryption_key_name
+  encryption_key_name = module.encryption.key_id
 
   # Network
   ip_configuration = local.ip_configuration

@@ -9,6 +9,7 @@ Terraform module which creates **SQL** resources, secrets and backups on **GCP**
 - AASQL / POSTGRES INSTANCE I can have db users and store their passwords in secret manager
 - AASQL / POSTGRES INSTANCE I can have multiple dbs
 - AASQL / POSTGRES INSTANCE I can have custom exporter to schedule backups in a bucket
+- AASQL / POSTGRES INSTANCE I use can use custom managed keys to encrypt my disk
 
 ## Usage
 

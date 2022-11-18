@@ -22,7 +22,7 @@ locals {
       user_labels           = var.labels
       database_flags        = var.database_flags
       ip_configuration      = local.ip_configuration
-      encryption_key_name   = var.encryption_key_name
+      encryption_key_name   = module.encryption.key_id
     }
   ]
   default_backup_configuration = {
