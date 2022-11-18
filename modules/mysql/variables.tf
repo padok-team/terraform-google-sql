@@ -13,7 +13,7 @@ variable "region" {
   type        = string
   validation {
     condition     = length(split("-", var.region)) == 2
-    error_message = "This is not a region"
+    error_message = "This is not a region."
   }
 }
 
@@ -22,7 +22,7 @@ variable "availability_type" {
   type        = string
   validation {
     condition     = var.availability_type == "REGIONAL" || var.availability_type == "ZONAL"
-    error_message = "availability_type only supports REGIONAL or ZONAL"
+    error_message = "Availability_type only supports REGIONAL or ZONAL."
   }
   default = "REGIONAL"
 }
@@ -138,10 +138,16 @@ variable "labels" {
   default     = {}
 }
 
-variable "encryption_key_name" {
-  description = "KMS key to be used to encrypt database disk."
+variable "encryption_key_id" {
+  description = "The full path to the encryption key used for the CMEK disk encryption. The provided key must be in the same region as the SQL instance. If not provided, a KMS key will be generated."
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "encryption_key_rotation_period" {
+  description = "The encryption key rotation period for the CMEK disk encryption. The provided key must be in the same region as the SQL instance. If encryption_key_id is defined, this variable is not used."
+  type        = string
+  default     = "7889400s" # 3 months
 }
 
 variable "sql_exporter" {

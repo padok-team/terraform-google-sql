@@ -9,6 +9,7 @@ Terraform module which creates **MYSQLDB** resources on **GCP**. This module is 
 - AAUser I can deploy a MySQL Database with N replica
 - AAUser I can deploy a MySQL Database with/without TLS encryption
 - AAUser I can deploy a cloud scheduler which launches exports with an already existing pubsub function
+- AAUser I can encrypt the database with my own encryption key
 
 <em>By default, deployed Database is in HA mode, with a 7 retention days backup strategy.</em>
 
@@ -69,6 +70,7 @@ module "my-private-mysql-db" {
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_encryption"></a> [encryption](#module\_encryption) | ../encryption | n/a |
 | <a name="module_mysql-db"></a> [mysql-db](#module\_mysql-db) | GoogleCloudPlatform/sql-db/google//modules/mysql | 11.0.0 |
 | <a name="module_secrets"></a> [secrets](#module\_secrets) | ../secrets | n/a |
 
@@ -95,7 +97,8 @@ module "my-private-mysql-db" {
 | <a name="input_db_collation"></a> [db\_collation](#input\_db\_collation) | Collation for the DB. | `string` | `"utf8_general_ci"` | no |
 | <a name="input_disk_limit"></a> [disk\_limit](#input\_disk\_limit) | The maximum size to which storage can be auto increased. | `number` | n/a | yes |
 | <a name="input_disk_type"></a> [disk\_type](#input\_disk\_type) | The disk type (PD\_SSD, PD\_HDD). | `string` | `"PD_SSD"` | no |
-| <a name="input_encryption_key_name"></a> [encryption\_key\_name](#input\_encryption\_key\_name) | KMS key to be used to encrypt database disk. | `string` | `""` | no |
+| <a name="input_encryption_key_id"></a> [encryption\_key\_id](#input\_encryption\_key\_id) | The full path to the encryption key used for the CMEK disk encryption. The provided key must be in the same region as the SQL instance. If not provided, a KMS key will be generated. | `string` | `null` | no |
+| <a name="input_encryption_key_rotation_period"></a> [encryption\_key\_rotation\_period](#input\_encryption\_key\_rotation\_period) | The encryption key rotation period for the CMEK disk encryption. The provided key must be in the same region as the SQL instance. If encryption\_key\_id is defined, this variable is not used. | `string` | `"7889400s"` | no |
 | <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The version of MySQL engine. Check https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version for possible versions. | `string` | `"MYSQL_8_0"` | no |
 | <a name="input_instance_deletion_protection"></a> [instance\_deletion\_protection](#input\_instance\_deletion\_protection) | Used to block Terraform from deleting a SQL Instance. | `bool` | `false` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to add to the CloudSQL and its replicas. | `map(string)` | `{}` | no |
