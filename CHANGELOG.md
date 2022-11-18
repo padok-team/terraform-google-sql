@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/padok-team/terraform-google-sql/compare/v0.3.0...v0.4.0) (2022-11-18)
+
+
+### Features
+
+* **encryption:** encrypt db disks with kms key ([30500f9](https://github.com/padok-team/terraform-google-sql/commit/30500f9c9175c1a82f3ad975f5c2ac8ff0772948))
+
 ## [0.3.0](https://github.com/padok-team/terraform-google-sql/compare/v0.2.0...v0.3.0) (2022-11-04)
 
 
