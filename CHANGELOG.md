@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/padok-team/terraform-google-sql/compare/v0.4.0...v0.4.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* **deps:** update module golang.org/x/oauth2 to v0.4.0 ([d8d1e6f](https://github.com/padok-team/terraform-google-sql/commit/d8d1e6fd9277f629c063ae6264d29ce55a109fa6))
+
 ## [0.4.0](https://github.com/padok-team/terraform-google-sql/compare/v0.3.0...v0.4.0) (2022-11-18)
 
 
