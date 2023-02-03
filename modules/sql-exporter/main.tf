@@ -22,7 +22,7 @@ resource "google_storage_bucket" "this" {
 
 module "pubsub" {
   source              = "terraform-google-modules/pubsub/google"
-  version             = "~> 3.2.0"
+  version             = "~> 5.0.0"
   topic               = "${var.name}-exporter"
   project_id          = var.project_id
   grant_token_creator = false
