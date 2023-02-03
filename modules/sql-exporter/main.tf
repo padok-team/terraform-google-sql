@@ -53,7 +53,7 @@ resource "random_id" "suffix" {
 
 module "function" {
   source  = "terraform-google-modules/event-function/google"
-  version = "~> 2.3.0"
+  version = "~> 2.5.0"
 
   entry_point = "ProcessPubSub"
   event_trigger = {
