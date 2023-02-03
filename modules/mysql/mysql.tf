@@ -7,7 +7,7 @@ resource "random_shuffle" "zone" {
 # Instance
 module "mysql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "11.0.0"
+  version = "13.0.1"
 
   name                 = var.name # Mandatory
   random_instance_name = true
