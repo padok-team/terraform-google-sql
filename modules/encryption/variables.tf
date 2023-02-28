@@ -3,6 +3,11 @@ variable "name" {
   type        = string
 }
 
+variable "project_id" {
+  description = "The project ID to manage the Cloud SQL resource."
+  type        = string
+}
+
 variable "region" {
   description = "Region in which the key ring will be located."
   type        = string
