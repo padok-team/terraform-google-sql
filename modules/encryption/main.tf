@@ -6,9 +6,8 @@ resource "google_project_service_identity" "gcp_sa_cloud_sql" {
 }
 
 # Grant access to the key
-resource "google_kms_crypto_key_iam_binding" "crypto_key" {
+resource "google_kms_crypto_key_iam_member" "crypto_key" {
   provider = google-beta
-  project  = var.project_id
 
   crypto_key_id = var.encryption_key_id == null ? google_kms_crypto_key.this[0].id : var.encryption_key_id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
