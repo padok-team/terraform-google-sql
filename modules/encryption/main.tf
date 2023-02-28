@@ -30,7 +30,6 @@ resource "google_kms_key_ring" "this" {
 resource "google_kms_crypto_key" "this" {
   count = var.encryption_key_id == null ? 1 : 0
 
-  project         = var.project_id
   name            = "${var.name}-key"
   key_ring        = google_kms_key_ring.this[0].id
   rotation_period = var.encryption_key_rotation_period
