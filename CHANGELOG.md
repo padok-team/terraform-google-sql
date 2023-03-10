@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/padok-team/terraform-google-sql/compare/v0.4.1...v0.4.2) (2023-03-02)
+
+
+### Bug Fixes
+
+* **encryption:** missing project_id/project variable in submodule ([#32](https://github.com/padok-team/terraform-google-sql/issues/32)) ([6a2662f](https://github.com/padok-team/terraform-google-sql/commit/6a2662ffde457ac97a8547e08ab5c831a99654e2))
+
 ## [0.4.1](https://github.com/padok-team/terraform-google-sql/compare/v0.4.0...v0.4.1) (2023-02-03)
 
 
