@@ -6,6 +6,11 @@ resource "google_storage_bucket" "this" {
 
   uniform_bucket_level_access = true
 
+  # CKV_GCP_78: Ensure Cloud storage has versioning enabled
+  versioning {
+    enabled = true
+  }
+
   dynamic "lifecycle_rule" {
     for_each = var.lifecycle_rules
     content {
