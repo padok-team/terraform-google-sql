@@ -60,6 +60,9 @@ resource "random_id" "suffix" {
 
 
 module "function" {
+  #checkov:skip=CKV_GCP_78:Ensure Cloud storage has versioning enabled
+  #checkov:skip=CKV_GCP_114:Ensure public access prevention is enforced on Cloud Storage bucket
+  # Skipped because it doesn't need to be an option in the module below.
   source  = "terraform-google-modules/event-function/google"
   version = "~> 2.5.0"
 
