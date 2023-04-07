@@ -11,7 +11,11 @@ module "mysql-db" {
 
   name                 = var.name # Mandatory
   random_instance_name = true
+
+  #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
+  # Skipped because it's in a variable
   database_version     = var.engine_version # Mandatory
+
   project_id           = var.project_id     # Mandatory
   zone                 = local.zone
   region               = var.region
@@ -57,7 +61,7 @@ module "mysql-db" {
 
   #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
-  # Skipped because it's enabled but in a local variable
+  # Skipped because it's in a local variable
 
   # Network
   ip_configuration = local.ip_configuration
