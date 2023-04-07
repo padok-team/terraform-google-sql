@@ -4,11 +4,10 @@ resource "random_shuffle" "zone" {
   result_count = 1
 }
 
-#checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
-# Skipped because it doesn't need to be an option in the module below.
-
 # Instance
 module "postgresql-db" {
+  #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
+  # Skipped because it doesn't need to be an option in the module below.
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   version = "13.0.1"
 
