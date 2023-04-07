@@ -4,6 +4,9 @@ resource "random_shuffle" "zone" {
   result_count = 1
 }
 
+#checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
+# Skipped because it doesn't need to be an option in the module below.
+
 # Instance
 module "postgresql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
@@ -33,6 +36,9 @@ module "postgresql-db" {
   #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
   #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
   #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+  #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements
+  #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases
+  #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower
   # Skipped because it's in a variable
   database_flags = var.database_flags
 
