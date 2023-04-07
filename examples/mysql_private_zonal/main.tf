@@ -49,6 +49,9 @@ module "my-private-mysql-db" {
   backup_configuration = {
     enabled  = true
     location = "europe-west3"
+
+    #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
+    #Skipped because we don't have a 'start_time' within the backup_configuration
   }
 
   databases = {
