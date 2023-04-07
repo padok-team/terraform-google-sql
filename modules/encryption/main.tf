@@ -34,5 +34,7 @@ resource "google_kms_crypto_key" "this" {
   rotation_period = max(var.encryption_key_rotation_period, 7776000)
 
   # CKV_GCP_82: "Ensure KMS keys are protected from deletion"
-  deletion_protection = true
+  lifecycle {
+    prevent_destroy = true
+  }
 }
