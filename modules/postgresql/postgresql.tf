@@ -11,6 +11,8 @@ module "postgresql-db" {
 
   name                 = var.name # Mandatory
   random_instance_name = true
+  #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
+  # Skipped because it's in a variable
   database_version     = var.engine_version # Mandatory
   project_id           = var.project_id     # Mandatory
   zone                 = local.zone
@@ -27,12 +29,19 @@ module "postgresql-db" {
   disk_type       = var.disk_type
 
   # Configuration
+  #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
+  #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+  # Skipped because it's in a variable
   database_flags = var.database_flags
 
   # High Availability
   availability_type = var.availability_type
 
   # Backup
+  #checkov:skip=CKV_GCP_14:Ensure all Cloud SQL database instance have backup configuration enabled
+  # Skipped because it's enabled but in a local variable
   backup_configuration = local.backup_configuration
 
   # Replicas
@@ -53,6 +62,9 @@ module "postgresql-db" {
   encryption_key_name = module.encryption.key_id
 
   # Network
+  #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP
+  #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
+  # Skipped because it's in a local variable
   ip_configuration = local.ip_configuration
 
   # Terraform timeout
