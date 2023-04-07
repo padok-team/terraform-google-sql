@@ -25,7 +25,7 @@ This module creates a storage bucket and a cloud function to export database bac
 
 ## Examples
 
-Examples might need to run `terraform apply` twice because of a race condition with the network. This would not be needed in normal configurations as the network would be created somewhere else.
+Examples can be found in the examples folder. You might need to run `terraform apply` twice because of a race condition with the network. This would not be needed in normal configurations as the network would be created somewhere else.
 
 - [MySQL instance private and zonal](examples/mysql_private_zonal)
 - [MySQL instance public and regional](examples/mysql_public_regional)
