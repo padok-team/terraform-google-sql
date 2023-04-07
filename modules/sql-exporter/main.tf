@@ -1,4 +1,6 @@
 resource "google_storage_bucket" "this" {
+  #checkov:skip=CKV_GCP_62:Bucket should log access
+  # Skipped because we don't have a variable for log bucket currently.
   name          = "${var.name}-exports"
   location      = var.region
   force_destroy = true
