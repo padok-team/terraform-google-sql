@@ -29,7 +29,9 @@ resource "google_kms_crypto_key" "this" {
 
   name            = "${var.name}-key"
   key_ring        = google_kms_key_ring.this[0].id
-  rotation_period = var.encryption_key_rotation_period
+
+  # CKV_GCP_43: Ensure KMS encryption keys are rotated within a period of 90 days
+  rotation_period = max(var.encryption_key_rotation_period, 7776000)
 
   # CKV_GCP_82: "Ensure KMS keys are protected from deletion"
   deletion_protection = true
