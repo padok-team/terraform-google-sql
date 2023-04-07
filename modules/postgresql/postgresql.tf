@@ -38,6 +38,7 @@ module "postgresql-db" {
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements
   #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases
   #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower
+  #checkov:ship=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
   # Skipped because it's in a variable
   database_flags = var.database_flags
 
