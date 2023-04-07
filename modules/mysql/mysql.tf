@@ -32,6 +32,9 @@ module "mysql-db" {
   # High Availability
   availability_type = var.availability_type
 
+  #checkov:skip=CKV_GCP_14:Ensure all Cloud SQL database instance have backup configuration enabled
+  # Skipped because it's enabled but in a local variable
+
   # Backup
   backup_configuration = local.backup_configuration
 
@@ -51,6 +54,10 @@ module "mysql-db" {
 
   # Encryption
   encryption_key_name = module.encryption.key_id
+
+  #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP
+  #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
+  # Skipped because it's enabled but in a local variable
 
   # Network
   ip_configuration = local.ip_configuration
