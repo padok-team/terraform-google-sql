@@ -12,9 +12,7 @@ resource "google_storage_bucket" "this" {
   }
 
   # CKV_GCP_114: Ensure public access prevention is enforced on Cloud Storage bucket
-  iam_configuration {
-    public_access_prevention = "enforced"
-  }
+  public_access_prevention = "enforced"
 
   dynamic "lifecycle_rule" {
     for_each = var.lifecycle_rules
