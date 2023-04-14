@@ -9,7 +9,7 @@ module "postgresql-db" {
   #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
   # Skipped because it doesn't need to be an option in the module below.
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "13.0.1"
+  version = "14.1.0"
 
   name                 = var.name # Mandatory
   random_instance_name = true
@@ -55,7 +55,7 @@ module "postgresql-db" {
 
   # Users
   enable_default_user = false
-  additional_users    = module.secrets.users_passwords
+  additional_users    = [for user in module.secrets.users_passwords : merge(user, { type = "BUILT_IN" })]
 
   # Databases
   enable_default_db    = false

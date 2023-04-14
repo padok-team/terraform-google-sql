@@ -7,7 +7,7 @@ resource "random_shuffle" "zone" {
 # Instance
 module "mysql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "13.0.1"
+  version = "14.1.0"
 
   name                 = var.name # Mandatory
   random_instance_name = true
@@ -47,7 +47,7 @@ module "mysql-db" {
 
   # Users
   enable_default_user = false
-  additional_users    = module.secrets.users_passwords
+  additional_users    = [for user in module.secrets.users_passwords : merge(user, { type = "BUILT_IN", host = var.users_host })]
 
   # Databases
   enable_default_db    = false
