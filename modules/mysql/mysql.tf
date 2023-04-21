@@ -41,6 +41,8 @@ module "mysql-db" {
 
   # Backup
   backup_configuration = local.backup_configuration
+  #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
+  # Skipped because it costs money so is an opt-in feature
 
   # Replicas
   read_replicas = local.replicas
