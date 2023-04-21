@@ -27,8 +27,8 @@ resource "google_kms_key_ring" "this" {
 resource "google_kms_crypto_key" "this" {
   count = var.encryption_key_id == null ? 1 : 0
 
-  name            = "${var.name}-key"
-  key_ring        = google_kms_key_ring.this[0].id
+  name     = "${var.name}-key"
+  key_ring = google_kms_key_ring.this[0].id
 
   #checkov:skip=CKV_GCP_43:Ensure GCP KMS encryption key is rotating every 90 days
   # Skipped because it's a variable so the linter doesn't know the rotation period.

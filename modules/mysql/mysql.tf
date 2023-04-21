@@ -14,13 +14,13 @@ module "mysql-db" {
 
   #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
   # Skipped because it's in a variable
-  database_version     = var.engine_version # Mandatory
+  database_version = var.engine_version # Mandatory
 
-  project_id           = var.project_id     # Mandatory
-  zone                 = local.zone
-  region               = var.region
-  tier                 = var.tier
-  user_labels          = var.labels
+  project_id  = var.project_id # Mandatory
+  zone        = local.zone
+  region      = var.region
+  tier        = var.tier
+  user_labels = var.labels
 
   db_charset   = var.db_charset
   db_collation = var.db_collation
