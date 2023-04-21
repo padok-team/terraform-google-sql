@@ -31,6 +31,7 @@ module "postgresql-db" {
   disk_type       = var.disk_type
 
   # Configuration
+  #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
   #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
   #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
   #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
@@ -39,7 +40,7 @@ module "postgresql-db" {
   #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases
   #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower
   #checkov:ship=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
-  # Skipped because it's in a variable
+  # Skipped because it's in a variable, and merging the list of objects wasn't working
   database_flags = var.database_flags
 
   # High Availability
