@@ -4,23 +4,23 @@ on:
       - main
 name: terraform-quality
 jobs:
-  terraform-quality-encryption:
+  encryption:
     uses: padok-team/github-workflows/.github/workflows/terraform-quality.yml@v1
     with:
       workdir: modules/encryption
-  terraform-quality-mysql:
+  mysql:
     uses: padok-team/github-workflows/.github/workflows/terraform-quality.yml@v1
     with:
       workdir: modules/mysql
-  terraform-quality-postgresql:
+  postgresql:
     uses: padok-team/github-workflows/.github/workflows/terraform-quality.yml@v1
     with:
       workdir: modules/postgresql
-  terraform-quality-secrets:
+  secrets:
     uses: padok-team/github-workflows/.github/workflows/terraform-quality.yml@v1
     with:
       workdir: modules/secrets
-  terraform-quality-sql-exporter:
+  sql-exporter:
     uses: padok-team/github-workflows/.github/workflows/terraform-quality.yml@v1
     with:
       workdir: modules/sql-exporter
