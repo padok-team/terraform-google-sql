@@ -33,3 +33,8 @@ output "users" {
   ]
   sensitive = true
 }
+
+output "secrets" {
+  description = "The secrets created for the users."
+  value       = module.my-public-postgresql-db.secrets
+}
