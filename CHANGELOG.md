@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/padok-team/terraform-google-sql/compare/v0.4.2...v0.5.0) (2023-05-05)
+
+
+### Features
+
+* 38 module does not export secret details ([#39](https://github.com/padok-team/terraform-google-sql/issues/39)) ([460fe1e](https://github.com/padok-team/terraform-google-sql/commit/460fe1e40c22c9a30e735e94d0c7ccb9b9d5424f))
+
+
+### Bug Fixes
+
+* **enablers:** fix lint and security issues ([7af6a0b](https://github.com/padok-team/terraform-google-sql/commit/7af6a0bad02fb270694705e7edfb04848cd6398a))
+
 ## [0.4.2](https://github.com/padok-team/terraform-google-sql/compare/v0.4.1...v0.4.2) (2023-03-02)
 
 
