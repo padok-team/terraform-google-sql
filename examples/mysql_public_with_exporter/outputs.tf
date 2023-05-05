@@ -32,5 +32,5 @@ output "users" {
 output "secrets" {
   description = "The secrets created for the users."
   value       = module.my-public-mysql-db-with-backup.secrets
-  sensitive = true
+  sensitive   = true
 }

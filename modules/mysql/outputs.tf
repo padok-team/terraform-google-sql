@@ -37,5 +37,5 @@ output "users" {
 output "secrets" {
   description = "The secrets created for the users."
   value       = module.secrets.secrets
-  sensitive = true
+  sensitive   = true
 }
