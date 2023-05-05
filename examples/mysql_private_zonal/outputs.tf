@@ -32,4 +32,5 @@ output "users" {
 output "secrets" {
   description = "The secrets created for the users."
   value       = module.my-private-mysql-db.secrets
+  sensitive   = true
 }
