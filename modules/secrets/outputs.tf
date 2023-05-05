@@ -9,6 +9,12 @@ locals {
 }
 
 output "users_passwords" {
-  description = "The map of users and their passwords."
   value       = local.users_passwords
+  description = "The map of users and their passwords."
+}
+
+output "secrets" {
+  value       = google_secret_manager_secret.password
+  description = "The secrets created for the users."
+  sensitive   = true
 }
