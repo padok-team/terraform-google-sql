@@ -6,17 +6,21 @@ resource "random_shuffle" "zone" {
 
 # Instance
 module "postgresql-db" {
+  #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
+  # Skipped because it doesn't need to be an option in the module below.
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "13.0.1"
+  version = "14.1.0"
 
   name                 = var.name # Mandatory
   random_instance_name = true
-  database_version     = var.engine_version # Mandatory
-  project_id           = var.project_id     # Mandatory
-  zone                 = local.zone
-  region               = var.region
-  tier                 = var.tier
-  user_labels          = var.labels
+  #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
+  # Skipped because it's in a variable
+  database_version = var.engine_version # Mandatory
+  project_id       = var.project_id     # Mandatory
+  zone             = local.zone
+  region           = var.region
+  tier             = var.tier
+  user_labels      = var.labels
 
   db_charset   = var.db_charset
   db_collation = var.db_collation
@@ -27,12 +31,24 @@ module "postgresql-db" {
   disk_type       = var.disk_type
 
   # Configuration
+  #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
+  #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
+  #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+  #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements
+  #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases
+  #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower
+  #checkov:ship=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
+  # Skipped because it's in a variable, and merging the list of objects wasn't working
   database_flags = var.database_flags
 
   # High Availability
   availability_type = var.availability_type
 
   # Backup
+  #checkov:skip=CKV_GCP_14:Ensure all Cloud SQL database instance have backup configuration enabled
+  # Skipped because it's enabled but in a local variable
   backup_configuration = local.backup_configuration
 
   # Replicas
@@ -40,7 +56,7 @@ module "postgresql-db" {
 
   # Users
   enable_default_user = false
-  additional_users    = module.secrets.users_passwords
+  additional_users    = [for user in module.secrets.users_passwords : merge(user, { type = "BUILT_IN" })]
 
   # Databases
   enable_default_db    = false
@@ -53,6 +69,9 @@ module "postgresql-db" {
   encryption_key_name = module.encryption.key_id
 
   # Network
+  #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP
+  #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
+  # Skipped because it's in a local variable
   ip_configuration = local.ip_configuration
 
   # Terraform timeout

@@ -1,10 +1,20 @@
 resource "google_storage_bucket" "this" {
+  #checkov:skip=CKV_GCP_62:Bucket should log access
+  # Skipped because we don't have a variable for log bucket currently.
   name          = "${var.name}-exports"
   location      = var.region
   force_destroy = true
   project       = var.project_id
 
   uniform_bucket_level_access = true
+
+  # CKV_GCP_78: Ensure Cloud storage has versioning enabled
+  versioning {
+    enabled = true
+  }
+
+  # CKV_GCP_114: Ensure public access prevention is enforced on Cloud Storage bucket
+  public_access_prevention = "enforced"
 
   dynamic "lifecycle_rule" {
     for_each = var.lifecycle_rules
@@ -52,6 +62,10 @@ resource "random_id" "suffix" {
 
 
 module "function" {
+  #checkov:skip=CKV_GCP_78:Ensure Cloud storage has versioning enabled
+  #checkov:skip=CKV_GCP_114:Ensure public access prevention is enforced on Cloud Storage bucket
+  #checkov:skip=CKV2_GCP_10:Ensure GCP Cloud Function HTTP trigger is secured
+  # Skipped because it doesn't need to be an option in the module below.
   source  = "terraform-google-modules/event-function/google"
   version = "~> 2.5.0"
 

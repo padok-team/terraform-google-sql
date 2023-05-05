@@ -94,6 +94,12 @@ variable "users" {
   type        = list(string)
 }
 
+variable "users_host" {
+  description = "value"
+  type        = string
+  default     = ""
+}
+
 variable "database_flags" {
   description = "Database configuration flags."
   type = list(object({
