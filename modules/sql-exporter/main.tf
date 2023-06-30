@@ -79,7 +79,7 @@ module "function" {
   name             = "${var.name}-exporter"
   project_id       = var.project_id
   region           = var.region
-  runtime          = "go116"
+  runtime          = "go118"
   source_directory = "${path.module}/function"
 
   source_dependent_files = []
