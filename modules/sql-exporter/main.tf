@@ -69,7 +69,7 @@ module "function" {
   #checkov:skip=CKV2_GCP_10:Ensure GCP Cloud Function HTTP trigger is secured
   # Skipped because it doesn't need to be an option in the module below.
   source  = "terraform-google-modules/event-function/google"
-  version = "~> 2.5.0"
+  version = "~> 3.0.0"
 
   entry_point = "ProcessPubSub"
   event_trigger = {
@@ -79,7 +79,7 @@ module "function" {
   name             = "${var.name}-exporter"
   project_id       = var.project_id
   region           = var.region
-  runtime          = "go116"
+  runtime          = "go118"
   source_directory = "${path.module}/function"
 
   source_dependent_files = []
