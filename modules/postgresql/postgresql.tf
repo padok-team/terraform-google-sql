@@ -8,6 +8,7 @@ resource "random_shuffle" "zone" {
 module "postgresql-db" {
   #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database
   # Skipped because it doesn't need to be an option in the module below.
+  #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   version = "14.1.0"
 
