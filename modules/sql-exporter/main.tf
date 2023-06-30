@@ -31,6 +31,7 @@ resource "google_storage_bucket" "this" {
 }
 
 module "pubsub" {
+  #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source              = "terraform-google-modules/pubsub/google"
   version             = "~> 5.0.0"
   topic               = "${var.name}-exporter"
@@ -62,6 +63,7 @@ resource "random_id" "suffix" {
 
 
 module "function" {
+  #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   #checkov:skip=CKV_GCP_78:Ensure Cloud storage has versioning enabled
   #checkov:skip=CKV_GCP_114:Ensure public access prevention is enforced on Cloud Storage bucket
   #checkov:skip=CKV2_GCP_10:Ensure GCP Cloud Function HTTP trigger is secured

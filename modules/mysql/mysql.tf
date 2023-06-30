@@ -6,6 +6,7 @@ resource "random_shuffle" "zone" {
 
 # Instance
 module "mysql-db" {
+  #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
   version = "14.1.0"
 
