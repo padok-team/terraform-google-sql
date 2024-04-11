@@ -5,7 +5,8 @@ locals {
     # We never set authorized networks, we need all connections via the
     # public IP to be mediated by Cloud SQL Proxy.
     authorized_networks = []
-    require_ssl         = var.require_ssl
+    require_ssl         = var.ssl_mode == "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" ? true : false # See docs for possible values: https://cloud.google.com/sql/docs/postgres/admin-api/rest/v1beta4/instances#ipconfiguration
+    ssl_mode            = var.ssl_mode
     private_network     = var.private_network
     allocated_ip_range  = var.allocated_ip_range
   }

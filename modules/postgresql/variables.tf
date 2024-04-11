@@ -111,10 +111,14 @@ variable "public" {
   default     = false
 }
 
-variable "require_ssl" {
-  description = "Set to false if you don not want to enforce SSL (less secure)."
-  type        = bool
-  default     = true
+variable "ssl_mode" {
+  description = "Specify how SSL connection should be enforced in DB connections."
+  type        = string
+  default     = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
+  validation {
+    condition     = var.ssl_mode == "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" || var.ssl_mode == "ENCRYPTED_ONLY" || var.ssl_mode == "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    error_message = "ssl_mode only supports TRUSTED_CLIENT_CERTIFICATE_REQUIRED, ENCRYPTED_ONLY or ALLOW_UNENCRYPTED_AND_ENCRYPTED."
+  }
 }
 
 variable "private_network" {
