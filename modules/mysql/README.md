@@ -52,6 +52,21 @@ module "my-private-mysql-db" {
 - [MySQL instance public, zonal, with backup exporter](examples/mysql_public_with_exporter)
 
 <!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.3 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.4 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.4 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3 |
+
 ## Modules
 
 | Name | Source | Version |
@@ -86,8 +101,8 @@ module "my-private-mysql-db" {
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to add to the CloudSQL and its replicas. | `map(string)` | `{}` | no |
 | <a name="input_public"></a> [public](#input\_public) | Set to true if the master instance should also have a public IP (less secure). | `bool` | `false` | no |
 | <a name="input_replicas"></a> [replicas](#input\_replicas) | The replicas instance names and configuration. | `map(any)` | `{}` | no |
-| <a name="input_require_ssl"></a> [require\_ssl](#input\_require\_ssl) | Set to false if you don not want to enforce SSL (less secure). | `bool` | `true` | no |
 | <a name="input_sql_exporter"></a> [sql\_exporter](#input\_sql\_exporter) | The SQL exporter to use for backups if needed. | <pre>object({<br>    bucket_name  = string<br>    pubsub_topic = string<br>    timezone     = optional(string, "UTC")<br>  })</pre> | `null` | no |
+| <a name="input_ssl_mode"></a> [ssl\_mode](#input\_ssl\_mode) | Specify how SSL connection should be enforced in DB connections. | `string` | `"TRUSTED_CLIENT_CERTIFICATE_REQUIRED"` | no |
 | <a name="input_tier"></a> [tier](#input\_tier) | The database tier (db-f1-micro, db-custom-cpu-ram). | `string` | `"db-f1-micro"` | no |
 | <a name="input_users_host"></a> [users\_host](#input\_users\_host) | value | `string` | `""` | no |
 
