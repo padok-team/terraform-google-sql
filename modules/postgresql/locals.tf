@@ -16,9 +16,10 @@ locals {
       tier                  = lookup(settings, "tier", var.tier)
       zone                  = lookup(settings, "zone", local.zone)
       disk_type             = lookup(settings, "disk_type", var.disk_type)
+      availability_type     = lookup(settings, "availability_type", var.availability_type)
+      disk_size             = lookup(settings, "disk_size", var.disk_size)
       disk_autoresize       = true
       disk_autoresize_limit = var.disk_limit
-      disk_size             = "10"
       user_labels           = var.labels
       database_flags        = var.database_flags
       ip_configuration      = local.ip_configuration
