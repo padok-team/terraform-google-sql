@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.0](https://github.com/padok-team/terraform-google-sql/compare/v0.5.1...v0.6.0) (2024-07-23)
+
+
+### Features
+
+* **replica:** add availability type and disk-size parameters ([#63](https://github.com/padok-team/terraform-google-sql/issues/63)) ([b1acda2](https://github.com/padok-team/terraform-google-sql/commit/b1acda204f1555b98a33655bdeac25e0a41067bc))
+
+
+### Bug Fixes
+
+* **deps:** update module golang.org/x/oauth2 to v0.9.0 ([#46](https://github.com/padok-team/terraform-google-sql/issues/46)) ([8c51f1d](https://github.com/padok-team/terraform-google-sql/commit/8c51f1d2f8c9dc97b1629ebb3900232762bfe8b2))
+* **deps:** update module google.golang.org/api to v0.126.0 ([#42](https://github.com/padok-team/terraform-google-sql/issues/42)) ([5216436](https://github.com/padok-team/terraform-google-sql/commit/5216436f11e5c80e7827e9c9c2614aa960def255))
+* **deps:** update module google.golang.org/api to v0.128.0 ([#45](https://github.com/padok-team/terraform-google-sql/issues/45)) ([7e82648](https://github.com/padok-team/terraform-google-sql/commit/7e826480168e2d34bfdd6451766d686b49159d16))
+* **deps:** update module google.golang.org/api to v0.129.0 ([#47](https://github.com/padok-team/terraform-google-sql/issues/47)) ([c78c202](https://github.com/padok-team/terraform-google-sql/commit/c78c202a41bf7ee32ffc0fb7aba2075701a8844c))
+* **deps:** update module google.golang.org/api to v0.134.0 ([#48](https://github.com/padok-team/terraform-google-sql/issues/48)) ([697db22](https://github.com/padok-team/terraform-google-sql/commit/697db22a0b8ff1c72a3e5218304cb2d46e8b6fa3))
+* **sql-exporter:** fix runtime version ([10dfe9e](https://github.com/padok-team/terraform-google-sql/commit/10dfe9e206114b357495da332ca94dde7a88a456))
+
 ## [0.5.1](https://github.com/padok-team/terraform-google-sql/compare/v0.5.0...v0.5.1) (2023-05-19)
 
 
