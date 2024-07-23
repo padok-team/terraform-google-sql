@@ -27,6 +27,11 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
+variable "replica_disk_size" {
+  description = "The disk size of the replica instance in GB."
+  type        = number
+  default     = 10
+}
 
 variable "engine_version" {
   description = "The version of PostgreSQL engine. Check https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version for possible versions."
