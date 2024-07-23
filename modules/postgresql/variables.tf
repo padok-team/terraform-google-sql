@@ -27,8 +27,8 @@ variable "availability_type" {
   default = "REGIONAL"
 }
 
-variable "disk_size" {
-  description = "The disk size of the master instance in GB."
+variable "replica_disk_size" {
+  description = "The disk size of the replica instance in GB."
   type        = number
   default     = 10
 }
