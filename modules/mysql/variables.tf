@@ -39,6 +39,12 @@ variable "tier" {
   default     = "db-f1-micro"
 }
 
+variable "edition" {
+  description = "The database edition (ENTERPRISE, ENTERPRISE_PLUS)."
+  type        = string
+  default     = "ENTERPRISE"
+}
+
 variable "disk_limit" {
   description = "The maximum size to which storage can be auto increased."
   type        = number
