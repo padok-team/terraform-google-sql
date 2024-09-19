@@ -33,7 +33,7 @@ resource "google_storage_bucket" "this" {
 module "pubsub" {
   #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source              = "terraform-google-modules/pubsub/google"
-  version             = "~> 5.0.0"
+  version             = "~> 7.0.0"
   topic               = "${var.name}-exporter"
   project_id          = var.project_id
   grant_token_creator = false
