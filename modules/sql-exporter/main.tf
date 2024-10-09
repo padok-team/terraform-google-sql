@@ -33,7 +33,7 @@ resource "google_storage_bucket" "this" {
 module "pubsub" {
   #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source              = "terraform-google-modules/pubsub/google"
-  version             = "~> 5.0.0"
+  version             = "~> 7.0"
   topic               = "${var.name}-exporter"
   project_id          = var.project_id
   grant_token_creator = false
@@ -69,7 +69,7 @@ module "function" {
   #checkov:skip=CKV2_GCP_10:Ensure GCP Cloud Function HTTP trigger is secured
   # Skipped because it doesn't need to be an option in the module below.
   source  = "terraform-google-modules/event-function/google"
-  version = "~> 3.0.0"
+  version = "~> 4.1.0"
 
   entry_point = "ProcessPubSub"
   event_trigger = {
