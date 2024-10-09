@@ -116,10 +116,10 @@ variable "public" {
   default     = false
 }
 
-variable "require_ssl" {
+variable "ssl_mode" {
   description = "Set to false if you don not want to enforce SSL (less secure)."
-  type        = bool
-  default     = true
+  type        = string
+  default     = "ENCRYPTED_ONLY"
 }
 
 variable "private_network" {
