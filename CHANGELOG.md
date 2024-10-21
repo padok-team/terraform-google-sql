@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0](https://github.com/padok-team/terraform-google-sql/compare/v0.6.0...v0.7.0) (2024-10-21)
+
+
+### Features
+
+* **upgrade:** pg-v22 ([4625d16](https://github.com/padok-team/terraform-google-sql/commit/4625d16737275a5af2c41479dee166626f3977f9))
+* **upgrade:** pg-v22 ([09c34d6](https://github.com/padok-team/terraform-google-sql/commit/09c34d686a8e8c1ff35019e4dcfb5a234da5da81))
+* **upgrade:** pg-v22 ([7e5cf17](https://github.com/padok-team/terraform-google-sql/commit/7e5cf171143276a8f093c1376919135117d76bb5))
+
 ## [0.6.0](https://github.com/padok-team/terraform-google-sql/compare/v0.5.1...v0.6.0) (2024-07-23)
 
 
