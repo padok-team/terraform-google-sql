@@ -3,13 +3,13 @@ module github.com/padok-team/terraform-google-sql-exporter/function
 go 1.18
 
 require (
-	golang.org/x/oauth2 v0.10.0
+	golang.org/x/oauth2 v0.24.0
 	google.golang.org/api v0.134.0
 )
 
 require (
 	cloud.google.com/go/compute v1.20.1 // indirect
-	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
