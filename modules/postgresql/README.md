@@ -51,6 +51,14 @@ EOT
 }
 ```
 
+## Execute your SQL script
+
+If you have set a custom sql script, you need to execute it. As for now, terraform doesn't allow to execute the sql script, you need to use the [gcloud command instead](https://cloud.google.com/sdk/gcloud/reference/sql/import/sql)
+
+```bash
+gcloud sql import sql my-private-postgres-db1 MY-BUCKET --database=postgres --project=MY-PROJECT -q
+```
+
 ## Examples
 
 - [POSTGRES instance private and regional](examples/postgresql_private_regional)

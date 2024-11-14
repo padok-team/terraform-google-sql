@@ -42,12 +42,20 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
-  
+
   custom_sql_script = <<EOT
 REVOKE ALL PRIVILEGES ON *.* FROM 'User_1'@'';
 GRANT ALL PRIVILEGES ON MYDB_1.* TO 'User_1'@'';
 EOT
 }
+```
+
+## Execute your SQL script
+
+If you have set a custom sql script, you need to execute it. As for now, terraform doesn't allow to execute the sql script, you need to use the [gcloud command instead](https://cloud.google.com/sdk/gcloud/reference/sql/import/sql)
+
+```bash
+gcloud sql import sql my-private-postgres-db1 MY-BUCKET --project=MY-PROJECT -q
 ```
 
 ## Examples
