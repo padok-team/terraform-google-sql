@@ -42,6 +42,11 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
+  
+  custom_sql_script = <<EOT
+REVOKE ALL PRIVILEGES ON *.* FROM 'User_1'@'';
+GRANT ALL PRIVILEGES ON MYDB_1.* TO 'User_1'@'';
+EOT
 }
 ```
 

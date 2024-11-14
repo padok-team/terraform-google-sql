@@ -42,6 +42,12 @@ module "my-private-postgresql-db" {
   }
 
   private_network = module.my_network.network_id
+
+  custom_sql_script = <<EOT
+ALTER ROLE "User_1" NOCREATEDB;
+ALTER ROLE "User_1" NOCREATEROLE;
+REVOKE cloudsqlsuperuser from "User_1";
+EOT
 }
 ```
 
