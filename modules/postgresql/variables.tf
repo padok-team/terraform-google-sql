@@ -167,3 +167,9 @@ variable "sql_exporter" {
   })
   default = null
 }
+
+variable "custom_sql_script" {
+  type        = string
+  description = "sql script to execute"
+  default     = ""
+}

@@ -74,6 +74,7 @@ module "my-private-mysql-db" {
 | <a name="input_availability_type"></a> [availability\_type](#input\_availability\_type) | Is CloudSQL instance Regional or Zonal correct values = (REGIONAL\|ZONAL). | `string` | `"REGIONAL"` | no |
 | <a name="input_backup_configuration"></a> [backup\_configuration](#input\_backup\_configuration) | The backup\_configuration settings subblock for the database setings. | `any` | `{}` | no |
 | <a name="input_create_secrets"></a> [create\_secrets](#input\_create\_secrets) | Do we create the secrets in secret manager? | `bool` | `true` | no |
+| <a name="input_custom_sql_script"></a> [custom\_sql\_script](#input\_custom\_sql\_script) | sql script to execute | `string` | `""` | no |
 | <a name="input_database_flags"></a> [database\_flags](#input\_database\_flags) | Database configuration flags. | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_databases"></a> [databases](#input\_databases) | List of the default DBs you want to create. | <pre>map(object({<br>    export_backup   = bool<br>    export_schedule = optional(string, "0 2 * * *")<br>  }))</pre> | `{}` | no |
 | <a name="input_db_charset"></a> [db\_charset](#input\_db\_charset) | Charset for the DB. | `string` | `"utf8"` | no |
@@ -103,4 +104,3 @@ module "my-private-mysql-db" {
 | <a name="output_secrets"></a> [secrets](#output\_secrets) | The secrets created for the users. |
 | <a name="output_users"></a> [users](#output\_users) | List of maps of users and passwords. |
 <!-- END_TF_DOCS -->
-
