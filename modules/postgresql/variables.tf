@@ -174,7 +174,9 @@ variable "custom_sql_script" {
   default     = ""
 }
 
-cvariable "zone" {
+
+
+variable "zone" {
   type = string
   description = "zone in which to deploy the database"  
 }
