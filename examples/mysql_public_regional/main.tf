@@ -62,6 +62,7 @@ module "my-public-mysql-db" {
   }
 
   private_network = module.my_network.network_id
+  depends_on = [module.my_network.google_service_networking_connection]
 
   public = true
 }

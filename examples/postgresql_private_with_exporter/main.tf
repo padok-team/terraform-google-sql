@@ -39,6 +39,7 @@ module "my-sql-exporter" {
 
   project_id = local.project_id
   region     = "europe-west3"
+  depends_on = [module.my_network.google_service_networking_connection]
 }
 
 
@@ -85,4 +86,5 @@ module "my-private-postgresql-db" {
   }
 
   private_network = module.my_network.network_id
+  depends_on = [module.my_network.google_service_networking_connection]
 }

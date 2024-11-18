@@ -39,6 +39,7 @@ module "my-sql-exporter" {
 
   project_id = local.project_id
   region     = "europe-west3"
+  depends_on = [module.my_network.google_service_networking_connection]
 }
 
 module "my-public-mysql-db-with-backup" {
@@ -78,6 +79,7 @@ module "my-public-mysql-db-with-backup" {
   }
 
   private_network = module.my-network.network_id
+  depends_on = [module.my_network.google_service_networking_connection]
 
   public = true
 }

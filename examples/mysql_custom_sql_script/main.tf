@@ -62,6 +62,7 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
+  depends_on = [module.my_network.google_service_networking_connection]
 
   custom_sql_script = <<EOT
 GRANT ALL PRIVILEGES ON MYDB_1.* TO 'User_1'@'';
