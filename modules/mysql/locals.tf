@@ -1,5 +1,4 @@
 locals {
-  zone = random_shuffle.zone.result[0]
   ip_configuration = {
     ipv4_enabled = var.public
     # We never set authorized networks, we need all connections via the
@@ -14,7 +13,7 @@ locals {
     for x, settings in var.replicas : {
       name                  = x
       tier                  = lookup(settings, "tier", var.tier)
-      zone                  = lookup(settings, "zone", local.zone)
+      zone                  = lookup(settings, "zone", var.zone)
       disk_type             = lookup(settings, "disk_type", var.disk_type)
       disk_autoresize       = true
       disk_autoresize_limit = var.disk_limit

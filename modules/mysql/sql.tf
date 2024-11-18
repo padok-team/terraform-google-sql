@@ -22,5 +22,16 @@ resource "google_storage_bucket_iam_member" "script_access" {
   count  = var.custom_sql_script != "" ? 1 : 0
   bucket = google_storage_bucket.script[0].name
   role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${module.postgresql-db.instance_service_account_email_address}"
+  member = "serviceAccount:${module.mysql-db.instance_service_account_email_address}"
+}
+
+resource "terraform_data" "sql_script" {
+  count  = var.custom_sql_script != "" ? 1 : 0
+  triggers_replace = [
+    google_storage_bucket.script[0].name,
+    module.mysql-db.instance_name
+  ]
+  provisioner "local-exec" {
+    command = "gcloud sql import sql ${module.mysql-db.instance_name} gs://${google_storage_bucket.script[0].name}/script.sql --project=${var.project_id} -q"
+  }
 }

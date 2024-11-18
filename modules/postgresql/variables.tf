@@ -173,3 +173,8 @@ variable "custom_sql_script" {
   description = "sql script to execute"
   default     = ""
 }
+
+cvariable "zone" {
+  type = string
+  description = "zone in which to deploy the database"  
+}
