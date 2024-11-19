@@ -46,7 +46,7 @@ resource "google_service_account" "this" {
 
 resource "google_storage_bucket_iam_member" "this" {
   bucket = google_storage_bucket.this.name
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${google_service_account.this.email}"
 }
 
