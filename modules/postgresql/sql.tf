@@ -4,12 +4,12 @@ resource "random_id" "this" {
 }
 
 resource "google_storage_bucket" "script" {
-  count         = var.init_custom_sql_script != "" ? 1 : 0
-  name          = "sql-script-${random_id.this[0].hex}"
-  location      = "europe-west3"
-  force_destroy = true
-  project       = var.project_id
-  public_access_prevention    = "enforced"
+  count                    = var.init_custom_sql_script != "" ? 1 : 0
+  name                     = "sql-script-${random_id.this[0].hex}"
+  location                 = "europe-west3"
+  force_destroy            = true
+  project                  = var.project_id
+  public_access_prevention = "enforced"
 }
 
 resource "google_storage_bucket_object" "sql_script" {
