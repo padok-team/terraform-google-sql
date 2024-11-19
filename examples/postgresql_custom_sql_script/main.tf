@@ -65,7 +65,7 @@ module "my-public-postgresql-db" {
   depends_on = [module.my_network.google_service_networking_connection]
 
   public = true
-  custom_sql_script = <<EOT
+  init_custom_sql_script = <<EOT
 ALTER ROLE "User_1" NOCREATEDB;
 ALTER ROLE "User_1" NOCREATEROLE;
 REVOKE cloudsqlsuperuser from "User_1";

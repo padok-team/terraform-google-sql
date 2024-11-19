@@ -1,7 +1,7 @@
 # Example of code for deploying a private MySQL DB with a peering between your private subnet and cloudsql service.
 # To access to your DB, you need a bastion or a VPN connection from your client.
 locals {
-  project_id = "library-344516"
+  project_id = "padok-lab"
 }
 
 provider "google" {
@@ -17,7 +17,7 @@ provider "google-beta" {
 module "my_network" {
   source = "github.com/padok-team/terraform-google-network?ref=v4.3.0"
 
-  name       = "my-network-3"
+  name       = "my-network-13"
   project_id = local.project_id
 
   subnets = {
@@ -35,7 +35,7 @@ module "my_network" {
 module "my-private-mysql-db" {
   source = "../../modules/mysql"
 
-  name              = "my-private-mysql-db1" # Mandatory
+  name              = "my-private-mysql-db13" # Mandatory
   engine_version    = "MYSQL_8_0"            # Mandatory
   project_id        = local.project_id       # Mandatory
   region            = "europe-west1"         # Mandatory
@@ -64,7 +64,7 @@ module "my-private-mysql-db" {
   private_network = module.my_network.network_id
   depends_on = [module.my_network.google_service_networking_connection]
 
-  custom_sql_script = <<EOT
+  init_custom_sql_script = <<EOT
 GRANT ALL PRIVILEGES ON MYDB_1.* TO 'User_1'@'';
 EOT
 }

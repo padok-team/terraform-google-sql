@@ -36,6 +36,6 @@ resource "google_kms_crypto_key" "this" {
 
   # CKV_GCP_82: "Ensure KMS keys are protected from deletion"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
