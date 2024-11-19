@@ -86,5 +86,5 @@ module "my-private-postgresql-db" {
   }
 
   private_network = module.my_network.network_id
-  depends_on = [module.my_network.google_service_networking_connection]
+  depends_on      = [module.my_network.google_service_networking_connection]
 }

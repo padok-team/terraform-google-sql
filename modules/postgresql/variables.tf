@@ -177,6 +177,6 @@ variable "init_custom_sql_script" {
 
 
 variable "zone" {
-  type = string
-  description = "zone in which to deploy the database"  
+  type        = string
+  description = "zone in which to deploy the database"
 }

@@ -41,7 +41,7 @@ module "my-private-mysql-db" {
   region            = "europe-west1"         # Mandatory
   availability_type = "ZONAL"
   zone              = "europe-west1-b"
-  disk_limit = 20
+  disk_limit        = 20
 
   users          = ["User_1", "User_2"]
   create_secrets = true
@@ -61,5 +61,5 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
-  depends_on = [module.my_network.google_service_networking_connection]
+  depends_on      = [module.my_network.google_service_networking_connection]
 }

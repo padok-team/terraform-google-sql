@@ -26,7 +26,7 @@ resource "google_storage_bucket_iam_member" "script_access" {
 }
 
 resource "terraform_data" "sql_script" {
-  count  = var.init_custom_sql_script != "" ? 1 : 0
+  count = var.init_custom_sql_script != "" ? 1 : 0
   triggers_replace = [
     google_storage_bucket.script[0].name,
     module.mysql-db.instance_name

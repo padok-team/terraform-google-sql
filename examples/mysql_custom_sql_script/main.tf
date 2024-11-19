@@ -36,9 +36,9 @@ module "my-private-mysql-db" {
   source = "../../modules/mysql"
 
   name              = "my-private-mysql-db13" # Mandatory
-  engine_version    = "MYSQL_8_0"            # Mandatory
-  project_id        = local.project_id       # Mandatory
-  region            = "europe-west1"         # Mandatory
+  engine_version    = "MYSQL_8_0"             # Mandatory
+  project_id        = local.project_id        # Mandatory
+  region            = "europe-west1"          # Mandatory
   availability_type = "ZONAL"
   zone              = "europe-west1-b"
 
@@ -62,7 +62,7 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
-  depends_on = [module.my_network.google_service_networking_connection]
+  depends_on      = [module.my_network.google_service_networking_connection]
 
   init_custom_sql_script = <<EOT
 GRANT ALL PRIVILEGES ON MYDB_1.* TO 'User_1'@'';
