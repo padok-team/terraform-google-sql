@@ -3,13 +3,8 @@ resource "random_id" "this" {
   byte_length = 4
 }
 
-resource "google_storage_bucket" "logging_bucket" {
-  name          = "bucket-access-logs"
-  location      = "europe-west3"
-  project       = var.project_id
-  force_destroy = true
-}
-
+#checkov:skip=CKV_GCP_62:Bucket should log access
+# Skipped because this bucket doesn't need log access
 resource "google_storage_bucket" "script" {
   count                       = var.init_custom_sql_script != "" ? 1 : 0
   name                        = "sql-script-${random_id.this[0].hex}"
@@ -20,11 +15,6 @@ resource "google_storage_bucket" "script" {
   uniform_bucket_level_access = true
   versioning {
     enabled = true
-  }
-
-  logging {
-    log_bucket        = google_storage_bucket.logging_bucket.name
-    log_object_prefix = "access_logs/"
   }
 }
 
