@@ -9,6 +9,7 @@ resource "google_storage_bucket" "script" {
   location      = "europe-west3"
   force_destroy = true
   project       = var.project_id
+  public_access_prevention    = "enforced"
 }
 
 resource "google_storage_bucket_object" "sql_script" {
