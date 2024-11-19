@@ -32,6 +32,7 @@ resource "google_storage_bucket" "this" {
 
 module "pubsub" {
   #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
+  #checkov:skip=CKV_GCP_42: Module uses the storage.admin role
   source              = "terraform-google-modules/pubsub/google"
   version             = "~> 7.0"
   topic               = "${var.name}-exporter"
