@@ -4,7 +4,6 @@ resource "random_id" "this" {
 }
 
 # checkov:skip=CKV_GCP_62 "Access logging not required for this bucket"
-# Skipped because this bucket doesn't need log access
 resource "google_storage_bucket" "script" {
   count                       = var.init_custom_sql_script != "" ? 1 : 0
   name                        = "sql-script-${random_id.this[0].hex}"
