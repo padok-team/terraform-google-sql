@@ -14,7 +14,7 @@ provider "google-beta" {
   region  = "europe-west3"
 }
 
-module "my-network" {
+module "my_network" {
   source = "github.com/padok-team/terraform-google-network?ref=v4.3.0"
 
   name       = "my-network-6"
