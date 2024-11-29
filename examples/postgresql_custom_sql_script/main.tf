@@ -40,7 +40,7 @@ module "my-public-postgresql-db" {
   project_id        = local.project_id         # Mandatory
   region            = "europe-west1"           # Mandatory
   availability_type = "ZONAL"
-  zone              = "europe-west1-b"
+  zone              = "europe-west3-b"
 
   disk_limit = 20
 
@@ -64,5 +64,10 @@ module "my-public-postgresql-db" {
   private_network = module.my_network.network_id
   depends_on      = [module.my_network.google_service_networking_connection]
 
-  public = true
+  public                 = true
+  init_custom_sql_script = <<EOT
+ALTER ROLE "User_1" NOCREATEDB;
+ALTER ROLE "User_1" NOCREATEROLE;
+REVOKE cloudsqlsuperuser from "User_1";
+EOT
 }

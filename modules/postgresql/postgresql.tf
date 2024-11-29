@@ -10,7 +10,7 @@ module "postgresql-db" {
   # Skipped because it doesn't need to be an option in the module below.
   #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "22.1.0"
+  version = "23.0.0"
 
   name                 = var.name # Mandatory
   random_instance_name = true
@@ -18,7 +18,7 @@ module "postgresql-db" {
   # Skipped because it's in a variable
   database_version = var.engine_version # Mandatory
   project_id       = var.project_id     # Mandatory
-  zone             = local.zone
+  zone             = var.zone
   region           = var.region
   tier             = var.tier
   user_labels      = var.labels

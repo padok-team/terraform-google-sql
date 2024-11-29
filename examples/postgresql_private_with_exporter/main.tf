@@ -15,7 +15,7 @@ provider "google-beta" {
 }
 
 module "my_network" {
-  source = "github.com/padok-team/terraform-google-network?ref=v3.0.0"
+  source = "github.com/padok-team/terraform-google-network?ref=v4.3.0"
 
   name       = "my-network-1"
   project_id = local.project_id
@@ -39,6 +39,7 @@ module "my-sql-exporter" {
 
   project_id = local.project_id
   region     = "europe-west3"
+  depends_on = [module.my_network.google_service_networking_connection]
 }
 
 
@@ -50,6 +51,7 @@ module "my-private-postgresql-db" {
   project_id        = local.project_id          # Mandatory
   region            = "europe-west1"            # Mandatory
   availability_type = "REGIONAL"
+  zone              = "europe-west1-b"
 
   disk_limit = 20
 
@@ -84,4 +86,5 @@ module "my-private-postgresql-db" {
   }
 
   private_network = module.my_network.network_id
+  depends_on      = [module.my_network.google_service_networking_connection]
 }

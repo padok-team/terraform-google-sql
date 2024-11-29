@@ -15,7 +15,7 @@ provider "google-beta" {
 }
 
 module "my_network" {
-  source = "github.com/padok-team/terraform-google-network?ref=v3.0.0"
+  source = "github.com/padok-team/terraform-google-network?ref=v4.3.0"
 
   name       = "my-network-3"
   project_id = local.project_id
@@ -40,8 +40,8 @@ module "my-private-mysql-db" {
   project_id        = local.project_id       # Mandatory
   region            = "europe-west1"         # Mandatory
   availability_type = "ZONAL"
-
-  disk_limit = 20
+  zone              = "europe-west1-b"
+  disk_limit        = 20
 
   users          = ["User_1", "User_2"]
   create_secrets = true
@@ -61,4 +61,5 @@ module "my-private-mysql-db" {
   }
 
   private_network = module.my_network.network_id
+  depends_on      = [module.my_network.google_service_networking_connection]
 }

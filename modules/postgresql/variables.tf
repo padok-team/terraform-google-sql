@@ -167,3 +167,16 @@ variable "sql_exporter" {
   })
   default = null
 }
+
+variable "init_custom_sql_script" {
+  type        = string
+  description = "sql script to execute"
+  default     = ""
+}
+
+
+
+variable "zone" {
+  type        = string
+  description = "zone in which to deploy the database"
+}
