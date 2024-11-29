@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/padok-team/terraform-google-sql/compare/v0.7.0...v0.8.0) (2024-11-29)
+
+
+### Features
+
+* allow to execute sql script ([#75](https://github.com/padok-team/terraform-google-sql/issues/75)) ([253fd5c](https://github.com/padok-team/terraform-google-sql/commit/253fd5c74b96b9de698d955bcb9761b2595c3b37))
+
 ## [0.7.0](https://github.com/padok-team/terraform-google-sql/compare/v0.6.0...v0.7.0) (2024-10-21)
 
 
