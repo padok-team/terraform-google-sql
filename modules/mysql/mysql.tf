@@ -8,7 +8,7 @@ resource "random_shuffle" "zone" {
 module "mysql-db" {
   #checkov:skip=CKV_TF_1:Ensure Terraform module sources use a commit hash
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "23.0.0"
+  version = "24.0.1"
 
   name                 = var.name # Mandatory
   random_instance_name = true
