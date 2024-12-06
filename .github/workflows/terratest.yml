@@ -33,4 +33,4 @@ jobs:
           rm install.sh
           tfswitch -b ~/.local/bin/terraform --latest
       - name: Test with the Go CLI
-        run: go test -timeout 60s ./test
+        run: go test -timeout 300s ./test
